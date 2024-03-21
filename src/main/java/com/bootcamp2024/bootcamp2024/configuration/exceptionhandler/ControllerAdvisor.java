@@ -1,8 +1,6 @@
 package com.bootcamp2024.bootcamp2024.configuration.exceptionhandler;
 
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.*;
 import com.bootcamp2024.bootcamp2024.configuration.Constants;
 import com.bootcamp2024.bootcamp2024.domain.exception.EmptyFieldException;
 import com.bootcamp2024.bootcamp2024.domain.exception.NegativeNotAllowedException;
@@ -57,6 +55,23 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleElementNotFoundException() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 Constants.ELEMENT_NOT_FOUND_EXCEPTION_MESSAGE, HttpStatus.CONFLICT.toString(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(TechnologyIdsSizeIsNotInTheLimitException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyIdsIsNotInTheLimitException(TechnologyIdsSizeIsNotInTheLimitException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_PASS_THE_LIMIT_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+    @ExceptionHandler(TechnologyIdsIsEmptyException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyIdsIsEmptyException(TechnologyIdsIsEmptyException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_IS_EMPTY_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(DuplicateTechnologyIdsException.class)
+    public ResponseEntity<ExceptionResponse> handleDuplicateTechnologyIdsException(DuplicateTechnologyIdsException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
     }
 
 
