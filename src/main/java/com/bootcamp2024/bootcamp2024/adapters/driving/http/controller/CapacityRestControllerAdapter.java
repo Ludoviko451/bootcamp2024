@@ -31,14 +31,14 @@ public class CapacityRestControllerAdapter {
 
     @PostMapping("/")
     public ResponseEntity<String> addCapacity(@RequestBody @Valid AddCapacityRequest request) {
-        capacityServicePort.saveCapacity(capacityRequestMapper.addRequestToCapacity(request), request.getTechnologyIds());
+        capacityServicePort.saveCapacity(capacityRequestMapper.addRequestToCapacity(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
 
     @GetMapping("/")
-    public ResponseEntity<List<CapacityResponse>> getAllCapacity(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String sortBy, @RequestParam Integer tecnologies){
+    public ResponseEntity<List<CapacityResponse>> getAllCapacity(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean tecnologies){
         return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacity(page, size, sortBy,tecnologies)));
     }
 }

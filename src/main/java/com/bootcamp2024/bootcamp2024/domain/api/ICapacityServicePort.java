@@ -6,8 +6,7 @@ import java.util.List;
 
 public interface ICapacityServicePort {
 
-    List<Capacity> getAllCapacity(Integer page, Integer size, String orderBy, int technologies);
-    void saveCapacity(Capacity capacity, List<Long> technologyIds);
+    List<Capacity> getAllCapacity(Integer page, Integer size, String orderBy, boolean technologies);
+    void saveCapacity(Capacity capacity);
 
-//    void addTechnologyToCapacity(Long capacityId, List<Long> technolyIds);
 }

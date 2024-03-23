@@ -59,7 +59,7 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     @Override
     public Technology findTechnologyByName(String name) {
         return tecnologiaPersistencePort.findByName(name)
-                .orElseThrow(() -> new NoDataFoundException());
+                .orElseThrow(NoDataFoundException::new);
     }
 }
 

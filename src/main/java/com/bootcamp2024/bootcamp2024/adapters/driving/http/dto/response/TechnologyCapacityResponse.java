@@ -1,24 +1,20 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response;
 
 // Solo muestra descripcion
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+
 public class TechnologyCapacityResponse {
-    private final Long id;
-    private final String name;
-
-
-
-    public TechnologyCapacityResponse(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
+    private Long id;
+    private String name;
 
 
 }

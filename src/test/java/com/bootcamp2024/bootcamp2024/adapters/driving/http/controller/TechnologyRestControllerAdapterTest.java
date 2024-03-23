@@ -43,7 +43,7 @@ class TechnologyRestControllerAdapterTest {
 
 
     @Test
-    void shouldReturnCreatedHttpStatusWhenTecnologiaIsSuccessfullySaved(){
+    void shouldReturnCreatedHttpStatusWhenTechnologyIsSuccessfullySaved(){
 
         AddTechnologyRequest addTechnologyRequest = new AddTechnologyRequest("Java", "Lenguaje de programacion");
 

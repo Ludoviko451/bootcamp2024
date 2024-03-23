@@ -40,11 +40,11 @@ public class BeanConfiguration {
 
     @Bean
     public ICapacityPersistencePort capacityPersistencePort(){
-        return new CapacityAdapter(capacityRepository, capacityEntityMapper, technologyRepository, technologyEntityMapper);
+        return new CapacityAdapter(capacityRepository, capacityEntityMapper);
     }
 
     @Bean
-    public ICapacityServicePort capacityServicePort(){ return new CapacityUseCase(capacityPersistencePort());
+    public ICapacityServicePort capacityServicePort(){ return new CapacityUseCase(capacityPersistencePort(), tecnologiaServicePort());
     }
 
 }

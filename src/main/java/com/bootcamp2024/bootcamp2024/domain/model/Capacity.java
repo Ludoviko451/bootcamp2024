@@ -1,6 +1,5 @@
 package com.bootcamp2024.bootcamp2024.domain.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Capacity {
@@ -8,20 +7,19 @@ public class Capacity {
     private final Long id;
     private final String name;
     private final String description;
-    private final List<Technology> technologyList = new ArrayList<>();
+
+    private final List<Technology> technologyList;
 
 
 
 
-    public Capacity(Long id, String name, String description) {
+    public Capacity(Long id, String name, String description, List<Technology> technologyList) {
         this.id = id;
         this.name = name;
         this.description = description;
+        this.technologyList = technologyList;
     }
 
-    public void addTechnology(Technology technology) {
-        technologyList.add(technology);
-    }
 
     public Long getId() {
         return id;
@@ -37,6 +35,5 @@ public class Capacity {
     public List<Technology> getTechnologyList() {
         return technologyList;
     }
-
 
 }
