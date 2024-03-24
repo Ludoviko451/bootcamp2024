@@ -1,25 +1,24 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request;
 
-
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.TechnologyCapacityResponse;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
 @AllArgsConstructor
 @Getter
-public class AddCapacityRequest {
+public class AddBootcampRequest {
 
-    @NotBlank(message = "La capacidad debe tener un nombre")
+    @NotBlank(message = "El bootcamp debe tener un nombre")
     private final String name;
 
-    @NotBlank(message = "La capacidad debe tener una descripcion")
+    @NotBlank(message = "El bootcamp debe tener una descripcion")
     private final String description;
 
-    @NotEmpty(message = "La lista de tecnologias no puede estar vacia")
-    private final List<TechnologyCapacityResponse> technologyList;
+    @NotEmpty(message = "La lista de capacidades no puede estar vacia")
+    private final List<CapacityBootcamp> capacityList;
 }

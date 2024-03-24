@@ -17,4 +17,5 @@ public interface ICapacityRepository extends JpaRepository<CapacityEntity, Long>
     @Query("SELECT c FROM CapacityEntity c LEFT JOIN c.technologyList t GROUP BY c.id ORDER BY COUNT(t) ASC")
     Page<CapacityEntity> findAllOrderByTechnologiesCountAsc(Pageable pageable);
 
+    CapacityEntity findByName(String name);
 }

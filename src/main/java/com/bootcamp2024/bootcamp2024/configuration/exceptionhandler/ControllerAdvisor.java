@@ -62,18 +62,37 @@ public class ControllerAdvisor {
         ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_PASS_THE_LIMIT_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
         return ResponseEntity.badRequest().body(response);
     }
-    @ExceptionHandler(TechnologyIdsIsEmptyException.class)
-    public ResponseEntity<ExceptionResponse> handleTechnologyIdsIsEmptyException(TechnologyIdsIsEmptyException e) {
-        ExceptionResponse response = new ExceptionResponse(String.format(Constants.TECHNOLOGY_IDS_IS_EMPTY_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
-        return ResponseEntity.badRequest().body(response);
-    }
 
     @ExceptionHandler(DuplicateTechnologyException.class)
     public ResponseEntity<ExceptionResponse> handleDuplicateTechnologyIdsException(DuplicateTechnologyException e) {
         ExceptionResponse response = new ExceptionResponse(String.format(Constants.DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
         return ResponseEntity.badRequest().body(response);
     }
+    @ExceptionHandler(TechnologyNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyNotFoundException(TechnologyNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+                String.format("Technology not found: %s", exception.getMessage()),
+                HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+    }
 
+    @ExceptionHandler(CapacitySizeIsNotInTheLimitException.class)
+    public ResponseEntity<ExceptionResponse> handleCapacityNotFoundException(DuplicateTechnologyException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.CAPACITY_SIZE_IS_NOT_IN_THE_LIMIT, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(CapacityNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleCapacityNotFoundException(CapacityNotFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+                String.format("Capacity not found: %s", exception.getMessage()),
+                HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(DuplicateCapacityException.class)
+    public ResponseEntity<ExceptionResponse> handleDuplicateCapacityException(DuplicateCapacityException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
 
     // Este método maneja las excepciones del tipo MethodArgumentNotValidException, que son lanzadas
     // cuando falla la validación de los argumentos de un método, por ejemplo, los parámetros de

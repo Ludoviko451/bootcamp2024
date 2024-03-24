@@ -1,5 +1,6 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacityNotFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateTechnologyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologySizeIsNotInTheLimitException;
@@ -39,8 +40,6 @@ public class CapacityUseCase implements ICapacityServicePort {
 
     @Override
     public void saveCapacity(Capacity capacity) {
-        // Verificar si la lista de IDs está vacía
-
         // Verificar si hay IDs duplicados
         if (hasDuplicates(capacity.getTechnologyList())) {
             throw new DuplicateTechnologyException();
@@ -55,6 +54,11 @@ public class CapacityUseCase implements ICapacityServicePort {
         capacityPersistencePort.saveCapacity(capacity);
     }
 
+    @Override
+    public Capacity findCapacityByName(String name) {
+        return capacityPersistencePort.findCapacityByName(name)
+                .orElseThrow(() -> new CapacityNotFoundException(name));
+    }
 
 
     private void checkTechnology(List<Technology> technologyList){

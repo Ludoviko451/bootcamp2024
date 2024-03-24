@@ -16,4 +16,8 @@ public class Constants {
 
     public static final String TECHNOLOGY_IDS_PASS_THE_LIMIT_MESSAGE = "Las ids ingresadas deben ser minimo 3 y maximo 20";
     public static final String DUPLICATE_IDS_TECHNOLOGY_IDS_EXCEPTION = "Porfavor no ingrese duplicados en la lista de tecnologias";
-}
+
+    public static final String CAPACITY_SIZE_IS_NOT_IN_THE_LIMIT = "Las capacidades que usted ha ingresado deben ser minimo 1 y maximo 4";
+
+    public static final String DUPLICATE_CAPACITY_EXCEPTION = "Porfavor no ingrese duplicados en la lista de capacidades";
+ }

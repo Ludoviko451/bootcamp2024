@@ -1,8 +1,10 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
 
+
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
 import com.bootcamp2024.bootcamp2024.domain.api.ITechnologyServicePort;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
@@ -59,7 +61,7 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     @Override
     public Technology findTechnologyByName(String name) {
         return tecnologiaPersistencePort.findByName(name)
-                .orElseThrow(NoDataFoundException::new);
+                .orElseThrow(() -> new TechnologyNotFoundException(name));
     }
 }
 

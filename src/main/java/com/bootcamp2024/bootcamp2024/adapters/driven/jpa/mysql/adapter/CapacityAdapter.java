@@ -9,7 +9,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
+
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class CapacityAdapter implements ICapacityPersistencePort {
@@ -70,6 +73,12 @@ public class CapacityAdapter implements ICapacityPersistencePort {
         capacityRepository.save(capacityEntityMapper.toEntity(capacity));
     }
 
+    @Override
+    public Optional<Capacity> findCapacityByName(String name) {
+        CapacityEntity capacityEntity = capacityRepository.findByName(name);
+
+        return capacityEntity != null ? Optional.of(capacityEntityMapper.toModel(capacityEntity)) : Optional.empty();
+    }
 
 
 }
