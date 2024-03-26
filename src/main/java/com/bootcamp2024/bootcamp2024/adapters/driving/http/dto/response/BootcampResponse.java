@@ -1,6 +1,5 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response;
 
-import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request.CapacityBootcamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

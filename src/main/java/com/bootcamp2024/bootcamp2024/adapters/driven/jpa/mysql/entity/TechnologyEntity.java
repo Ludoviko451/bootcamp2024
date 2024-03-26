@@ -23,7 +23,7 @@ public class TechnologyEntity {
     private Long id;
     @Column(unique = true, nullable = false, length = 50)
     private String name;
-    @Column(unique = true, nullable = false, length = 90)
+    @Column(unique = false, nullable = false, length = 90)
     private String description;
 
 

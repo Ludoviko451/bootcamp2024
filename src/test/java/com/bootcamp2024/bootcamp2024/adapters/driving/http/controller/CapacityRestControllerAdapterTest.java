@@ -1,6 +1,7 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.controller;
 
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request.AddCapacityRequest;
+import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.CapacityResponse;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.TechnologyCapacityResponse;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.TechnologyResponse;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.mapper.ICapacityRequestMapper;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -53,5 +56,189 @@ class CapacityRestControllerAdapterTest {
         ResponseEntity<?> responseEntity = capacityRestControllerAdapter.addCapacity(addCapacityRequest);
         verify(capacityServicePort, times(1)).saveCapacity(capacity);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+    }
+
+
+    @Test
+    void shouldReturnAllCapacities() {
+
+        Integer page = 0;
+        Integer size = 10;
+        String sortBy = "";
+        boolean technologies = false;
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(1L, "Capacity 1", "Description 1", Collections.emptyList()),
+                new Capacity(2L, "Capacity 2", "Description 2", Collections.emptyList())
+        );
+
+        List<CapacityResponse> expectedResponses = Arrays.asList(
+                new CapacityResponse(1L, "Capacity 1", "Description 1", Collections.emptyList()),
+                new CapacityResponse(2L, "Capacity 2", "Description 2", Collections.emptyList())
+        );
+
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
+
+        // Act
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+
+        List<CapacityResponse> capacityResponses = responseEntity.getBody();
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedResponses, responseEntity.getBody());
+        assertEquals("Capacity 1", capacityResponses.get(0).getName());
+        assertEquals("Capacity 2", capacityResponses.get(1).getName());
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
+    }
+
+    @Test
+    void shouldReturnCapacitiesInAscendingOrder() {
+        // Arrange
+        Integer page = 0;
+        Integer size = 10;
+        String sortBy = "asc";
+        boolean technologies = false;
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(1L, "ACapacity 1", "Description 1", Collections.emptyList()),
+                new Capacity(2L, "BCapacity 2", "Description 2", Collections.emptyList())
+        );
+
+        List<CapacityResponse> expectedResponses = Arrays.asList(
+                new CapacityResponse(1L, "ACapacity 1", "Description 1", Collections.emptyList()),
+                new CapacityResponse(2L, "BCapacity 2", "Description 2", Collections.emptyList())
+        );
+
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
+
+        // Act
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+
+        List<CapacityResponse> capacityResponses = responseEntity.getBody();
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedResponses, responseEntity.getBody());
+        assertEquals("BCapacity 2", capacityResponses.get(1).getName());
+        assertEquals("ACapacity 1", capacityResponses.get(0).getName());
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
+    }
+
+    @Test
+    void shouldReturnCapacitiesInDescendingOrder() {
+        // Arrange
+        Integer page = 0;
+        Integer size = 10;
+        String sortBy = "desc";
+        boolean technologies = false;
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(2L, "ZCapacity 2", "Description 2", Collections.emptyList()),
+                new Capacity(1L, "ACapacity 1", "Description 1", Collections.emptyList())
+        );
+
+        List<CapacityResponse> expectedResponses = Arrays.asList(
+                new CapacityResponse(2L, "ZCapacity 2", "Description 2", Collections.emptyList()),
+                new CapacityResponse(1L, "ACapacity 1", "Description 1", Collections.emptyList())
+        );
+
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
+
+        // Act
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+
+        List<CapacityResponse> capacityResponses = responseEntity.getBody();
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedResponses, responseEntity.getBody());
+        assertEquals("ZCapacity 2", capacityResponses.get(0).getName());
+        assertEquals("ACapacity 1", capacityResponses.get(1).getName());
+
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
+    }
+
+    @Test
+    void shouldReturnCapacitiesIsAscendingOrderByTechnologiesCount(){
+        Integer page = 0;
+        Integer size = 10;
+        String sortBy = "asc";
+        Boolean technologies = true;
+        List<Technology> technologyList = List.of(
+                new Technology(1L, "Technology", "Description")
+        );
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(2L, "Capacity 2", "Description 2", technologyList),
+                new Capacity(1L, "Capacity 1", "Description 1", Collections.emptyList())
+        );
+
+        List<TechnologyCapacityResponse> technologyCapacityResponseList = List.of(
+                new TechnologyCapacityResponse(1L, "Technology")
+        );
+        List<CapacityResponse> expectedResponses = Arrays.asList(
+                new CapacityResponse(2L, "Capacity 2", "Description 2", technologyCapacityResponseList),
+                new CapacityResponse(1L, "Capacity 1", "Description 1", Collections.emptyList())
+        );
+
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
+
+        // Act
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+
+        List<CapacityResponse> capacityResponses = responseEntity.getBody();
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedResponses, responseEntity.getBody());
+        assertEquals("Capacity 2", capacityResponses.get(0).getName());
+        assertEquals("Capacity 1", capacityResponses.get(1).getName());
+
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
+    }
+
+    @Test
+    void shouldReturnCapacitiesIsDescendingOrderByTechnologiesCount(){
+        Integer page = 0;
+        Integer size = 10;
+        String sortBy = "desc";
+        boolean technologies = true;
+        List<Technology> technologyList = List.of(
+                new Technology(1L, "Technology", "Description")
+        );
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(1L, "Capacity 1", "Description 1", Collections.emptyList()),
+                new Capacity(2L, "Capacity 2", "Description 2", technologyList)
+        );
+
+        List<TechnologyCapacityResponse> technologyCapacityResponseList = List.of(
+                new TechnologyCapacityResponse(1L, "Technology")
+        );
+        List<CapacityResponse> expectedResponses = Arrays.asList(
+                new CapacityResponse(1L, "Capacity 1", "Description 1", Collections.emptyList()),
+                new CapacityResponse(2L, "Capacity 2", "Description 2", technologyCapacityResponseList)
+        );
+
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
+
+        // Act
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+
+        List<CapacityResponse> capacityResponses = responseEntity.getBody();
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(expectedResponses, responseEntity.getBody());
+        assertEquals("Capacity 2", capacityResponses.get(1).getName());
+        assertEquals("Capacity 1", capacityResponses.get(0).getName());
+
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 }

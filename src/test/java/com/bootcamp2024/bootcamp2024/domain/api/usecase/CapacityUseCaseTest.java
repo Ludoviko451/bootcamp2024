@@ -75,7 +75,7 @@ class CapacityUseCaseTest {
 
 
     @Test
-    void shouldSaveCapacitySucefully() {
+    void shouldSaveCapacitySuccessfully() {
         // Crear una capacidad con una lista de tecnologías
         List<Technology> technologyList = Arrays.asList(
                 new Technology(1L, "Java", "Lenguaje de programacion"),
@@ -128,5 +128,42 @@ class CapacityUseCaseTest {
         assertThrows(DuplicateTechnologyException.class, () -> {
             capacityUseCase.saveCapacity(capacity);
         });
+    }
+
+    @Test
+    void shouldReturnCapacities(){
+
+        int page= 0;
+        int size = 5;
+        String orderBy = "asc";
+        boolean technologies = false;
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(1L, "capacidad", "description", Collections.emptyList())
+        );
+
+        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies)).thenReturn(capacityList);
+
+        List<Capacity> capacityResult = capacityUseCase.getAllCapacity(page, size, orderBy, technologies);
+
+        assertEquals(capacityList, capacityResult);
+        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies);
+    }
+    @Test
+    void shouldReturnNoDataFoundExceptionWhenCapacitiesNoExist(){
+
+        int page= 0;
+        int size = 5;
+        String orderBy = "asc";
+        boolean technologies = false;
+
+
+        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies)).thenReturn(Collections.emptyList());
+
+        assertThrows(NoDataFoundException.class, () -> {
+            capacityUseCase.getAllCapacity(page, size, orderBy, technologies);
+        });
+
+        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies);
     }
 }

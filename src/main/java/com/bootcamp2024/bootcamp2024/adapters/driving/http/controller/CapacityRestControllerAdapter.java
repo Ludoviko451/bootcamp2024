@@ -6,6 +6,7 @@ import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.Capacity
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.mapper.ICapacityRequestMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.mapper.ICapacityResponseMapper;
 import com.bootcamp2024.bootcamp2024.domain.api.ICapacityServicePort;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class CapacityRestControllerAdapter {
     private final ICapacityRequestMapper capacityRequestMapper;
     private final ICapacityResponseMapper capacityResponseMapper;
 
+    @Operation(summary = "Add a Capacity")
     @PostMapping("/")
     public ResponseEntity<String> addCapacity(@RequestBody @Valid AddCapacityRequest request) {
         capacityServicePort.saveCapacity(capacityRequestMapper.addRequestToCapacity(request));
@@ -36,7 +38,7 @@ public class CapacityRestControllerAdapter {
     }
 
 
-
+    @Operation(summary = "Get All Capacities")
     @GetMapping("/")
     public ResponseEntity<List<CapacityResponse>> getAllCapacity(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean tecnologies){
         return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacity(page, size, sortBy,tecnologies)));

@@ -1,7 +1,6 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.BootcampEntity;
-import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

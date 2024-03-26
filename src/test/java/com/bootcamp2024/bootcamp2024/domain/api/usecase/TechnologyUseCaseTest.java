@@ -1,4 +1,4 @@
-package com.bootcamp2024.bootcamp2024.usecase;
+package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.domain.api.usecase.TechnologyUseCase;
