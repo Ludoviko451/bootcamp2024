@@ -4,11 +4,14 @@ import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request.AddBootca
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.BootcampResponse;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.mapper.IBootcampRequestMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.mapper.IBootcampResponseMapper;
+import com.bootcamp2024.bootcamp2024.adapters.driving.http.utils.ParametersConstants;
 import com.bootcamp2024.bootcamp2024.domain.api.IBootcampServicePort;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,7 +39,7 @@ public class BootcampRestControllerAdapter {
 
     @Operation(summary = "Get All Bootcamp")
     @GetMapping("/")
-    public ResponseEntity<List<BootcampResponse>> getAllBootcamp(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean capacities){
+    public ResponseEntity<List<BootcampResponse>> getAllBootcamp(@RequestParam(defaultValue = ParametersConstants.DEFAULT_PAGE) @Valid @Min(value = 0, message =  ParametersConstants.MIN_PAGE_MESSAGE) Integer page, @RequestParam(defaultValue = ParametersConstants.DEFAULT_SIZE) @Valid @Min(value = 1, message =  ParametersConstants.MIN_SIZE_MESSAGE) Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean capacities){
         return ResponseEntity.ok(bootcampResponseMapper.toBootcampResponseList(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)));
     }
 }

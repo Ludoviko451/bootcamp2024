@@ -1,6 +1,7 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.BootcampEntity;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.IBootcampEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.IBootcampRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
@@ -28,16 +29,19 @@ public class BootcampAdapter implements IBootcampPersistencePort {
     }
 
     @Override
-    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities) {
+    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String sortBy, boolean capacities) {
         Pageable pagination;
-        if (orderBy != null) {
+        //Agregar una validacion de recibir una pagina y un size mayor a 0
+        //Agregar campo y direccion de sort
+
+        if (sortBy != null) {
             Sort.Direction direction = Sort.Direction.ASC;
             String sortField = "name"; // Campo predeterminado
 
-            if ("desc".equalsIgnoreCase(orderBy)) {
+            if ("desc".equalsIgnoreCase(sortBy)) {
                 direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(orderBy)) {
-                sortField = orderBy;
+            } else if (!"asc".equalsIgnoreCase(sortBy)) {
+                throw new ParameterNotValidForOrderbyException(sortBy);
             }
 
             pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
@@ -47,7 +51,7 @@ public class BootcampAdapter implements IBootcampPersistencePort {
         Page<BootcampEntity> bootcampPage;
 
         if (capacities){
-            if ("desc".equalsIgnoreCase(orderBy)){
+            if ("desc".equalsIgnoreCase(sortBy)){
                 bootcampPage = bootcampRepository.findAllOrderByCapacitiesCountDesc(pagination);
             } else {
                 bootcampPage = bootcampRepository.findAllOrderByCapacitiesCountAsc(pagination);

@@ -3,6 +3,7 @@ package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.PageAndSizeLessThanZeroException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
 import com.bootcamp2024.bootcamp2024.domain.api.ITechnologyServicePort;
@@ -49,7 +50,9 @@ public class TechnologyUseCase implements ITechnologyServicePort {
 
     @Override
     public List<Technology> getAllTechnology(Integer page, Integer size, String sortBy) {
-
+        if (page < 0 || size < 0){
+            throw new PageAndSizeLessThanZeroException();
+        }
         List<Technology> technologyList = tecnologiaPersistencePort.getAllTechnology(page, size, sortBy);
 
         if (technologyList.isEmpty()){

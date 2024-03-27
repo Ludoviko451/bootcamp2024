@@ -1,5 +1,6 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.CapacityEntity;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.ICapacityEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.ICapacityRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
@@ -28,16 +29,16 @@ public class CapacityAdapter implements ICapacityPersistencePort {
 
 
     @Override
-    public List<Capacity> getAllCapacity(Integer page, Integer size, String orderBy, boolean technologies) {
+    public List<Capacity> getAllCapacity(Integer page, Integer size, String sortBy, boolean technologies) {
         Pageable pagination;
-        if (orderBy != null) {
+        if (sortBy != null) {
             Sort.Direction direction = Sort.Direction.ASC;
             String sortField = "name"; // Campo predeterminado
 
-            if ("desc".equalsIgnoreCase(orderBy)) {
+            if ("desc".equalsIgnoreCase(sortBy)) {
                 direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(orderBy)) {
-                sortField = orderBy;
+            } else if (!"asc".equalsIgnoreCase(sortBy)) {
+                throw new ParameterNotValidForOrderbyException(sortBy);
             }
 
             pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
@@ -45,9 +46,10 @@ public class CapacityAdapter implements ICapacityPersistencePort {
             pagination = PageRequest.of(page, size);
         }
 
+
         Page<CapacityEntity> capacityPage;
         if (technologies) {
-            if ("desc".equalsIgnoreCase(orderBy)) {
+            if ("desc".equalsIgnoreCase(sortBy)) {
                 capacityPage = capacityRepository.findAllOrderByTechnologiesCountDesc(pagination);
             } else {
                 capacityPage = capacityRepository.findAllOrderByTechnologiesCountAsc(pagination);
@@ -65,9 +67,6 @@ public class CapacityAdapter implements ICapacityPersistencePort {
 
     @Override
     public void saveCapacity(Capacity capacity) {
-        // Buscar entidades de tecnología basadas en las IDs proporcionadas
-
-
         capacityRepository.save(capacityEntityMapper.toEntity(capacity));
     }
 

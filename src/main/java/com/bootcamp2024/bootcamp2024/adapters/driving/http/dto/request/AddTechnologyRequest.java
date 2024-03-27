@@ -1,6 +1,7 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request;
 
 
+import com.bootcamp2024.bootcamp2024.adapters.driving.http.utils.RequestConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -22,12 +23,12 @@ import lombok.Getter;
 @Getter
 public class AddTechnologyRequest {
 
-    @Size(max = 50, message = "El nombre de la tecnologia debe tener una longitud menor a 50 caracteres")
-    @NotBlank(message = "La Tecnologia debe tener un nombre")
+    @NotBlank(message = RequestConstants.NAME_IS_MANDATORY)
+    @Size(max = RequestConstants.NAME_MAX_SIZE, message = RequestConstants.NAME_MAX_SIZE_MESSAGE)
     private final String name;
 
-    @Size(max = 90, message = "La descripcion de la tecnologia debe tener una longitud menor a 90 caracteres")
-    @NotBlank(message = "La Tecnologia debe tener una descripcion")
+    @NotBlank(message = RequestConstants.DESCRIPTION_IS_MANDATORY)
+    @Size(max = RequestConstants.DESCRIPTION_MAX_SIZE, message = RequestConstants.DESCRIPTION_MAX_SIZE_MESSAGE)
     private final String description;
 
 

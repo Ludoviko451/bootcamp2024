@@ -3,6 +3,7 @@ package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
@@ -67,7 +68,7 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
             if ("desc".equalsIgnoreCase(sortBy)) {
                 direction = Sort.Direction.DESC;
             } else if (!"asc".equalsIgnoreCase(sortBy)) {
-                sortField = sortBy;
+                throw new ParameterNotValidForOrderbyException(sortBy);
             }
 
             pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
