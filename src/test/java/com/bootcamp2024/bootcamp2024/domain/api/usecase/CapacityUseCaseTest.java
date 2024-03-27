@@ -1,5 +1,6 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacityAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateTechnologyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologySizeIsNotInTheLimitException;
@@ -19,10 +20,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -165,5 +163,20 @@ class CapacityUseCaseTest {
         });
 
         verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies);
+    }
+
+    @Test
+    void shouldThrowsCapacityAlreadyExistsExceptionWhenCapacityExists(){
+        List<Technology> technologyList = Arrays.asList(
+                new Technology(1L, "Java", "Lenguaje de programacion"),
+                new Technology(2L, "Python", "Lenguaje de programacion")
+        );
+        Capacity capacity = new Capacity(1L, "Capacidad de prueba", "Descripción", technologyList);
+
+        when(capacityPersistencePort.findCapacityByName(capacity.getName())).thenReturn(Optional.of(capacity));
+
+        assertThrows(CapacityAlreadyExistsException.class, () -> {
+            capacityUseCase.saveCapacity(capacity);
+        });
     }
 }

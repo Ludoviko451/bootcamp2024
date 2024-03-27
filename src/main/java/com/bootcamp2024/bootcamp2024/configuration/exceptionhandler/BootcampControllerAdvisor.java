@@ -1,9 +1,6 @@
 package com.bootcamp2024.bootcamp2024.configuration.exceptionhandler;
 
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacityNotFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacitySizeIsNotInTheLimitException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateCapacityException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateTechnologyException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.*;
 import com.bootcamp2024.bootcamp2024.configuration.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,7 +15,7 @@ import java.time.LocalDateTime;
 public class BootcampControllerAdvisor {
 
     @ExceptionHandler(CapacitySizeIsNotInTheLimitException.class)
-    public ResponseEntity<ExceptionResponse> handleCapacitySizeIsNotInTheLimitException(DuplicateTechnologyException e) {
+    public ResponseEntity<ExceptionResponse> handleCapacitySizeIsNotInTheLimitException(CapacitySizeIsNotInTheLimitException e) {
         ExceptionResponse response = new ExceptionResponse(String.format(Constants.CAPACITY_SIZE_IS_NOT_IN_THE_LIMIT, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
         return ResponseEntity.badRequest().body(response);
     }
@@ -35,4 +32,12 @@ public class BootcampControllerAdvisor {
         ExceptionResponse response = new ExceptionResponse(String.format(Constants.DUPLICATE_CAPACITY_EXCEPTION, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
         return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(BootcampAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleBootcampAlreadyExistsException(BootcampAlreadyExistsException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.BOOTCAMP_ALREADY_EXISTS, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+
 }

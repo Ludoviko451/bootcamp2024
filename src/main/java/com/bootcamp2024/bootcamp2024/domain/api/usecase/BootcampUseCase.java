@@ -1,9 +1,6 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacitySizeIsNotInTheLimitException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateCapacityException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.PageAndSizeLessThanZeroException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.*;
 import com.bootcamp2024.bootcamp2024.domain.api.IBootcampServicePort;
 import com.bootcamp2024.bootcamp2024.domain.api.ICapacityServicePort;
 import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
@@ -13,6 +10,7 @@ import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class BootcampUseCase implements IBootcampServicePort {
@@ -28,7 +26,11 @@ public class BootcampUseCase implements IBootcampServicePort {
 
     @Override
     public void saveBootcamp(Bootcamp bootcamp) {
+        Optional<Bootcamp> existingBootcamp = bootcampPersistencePort.findBootcampByName(bootcamp.getName());
 
+        if (existingBootcamp.isPresent()){
+            throw new BootcampAlreadyExistsException();
+        }
         if (ListHelper.hasDuplicatesCapacity(bootcamp.getCapacityList())){
             throw new DuplicateCapacityException();
         }
@@ -42,6 +44,8 @@ public class BootcampUseCase implements IBootcampServicePort {
 
     @Override
     public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities) {
+
+
         if (page < 0 || size < 0){
             throw new PageAndSizeLessThanZeroException();
         }

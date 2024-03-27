@@ -31,4 +31,11 @@ public class CapacityControllerAdvisor {
                 String.format(Constants.TECHNOLOGY_NOT_FOUND_MESSAGE, exception.getMessage()),
                 HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
     }
+
+    @ExceptionHandler(CapacityAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleCapacityAlreadyExistsException(CapacityAlreadyExistsException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+                String.format(Constants.CAPACITY_ALREADY_EXISTS, exception.getMessage()),
+                HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+    }
 }

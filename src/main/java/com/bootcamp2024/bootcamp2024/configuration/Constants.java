@@ -24,4 +24,7 @@ public class Constants {
 
     public static final String CAPACITY_NOT_FOUND_MESSAGE = "Capacity not found: %s";
     public static final String TECHNOLOGY_NOT_FOUND_MESSAGE = "Technology not found: %s";
+
+    public static final String CAPACITY_ALREADY_EXISTS = "La capacidad que tu quieres crear ya existe";
+    public static final String BOOTCAMP_ALREADY_EXISTS = "El bootcamp que tu quieres crear ya existe";
  }

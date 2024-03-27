@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
+import java.util.Optional;
 
 public class BootcampAdapter implements IBootcampPersistencePort {
 
@@ -63,4 +64,12 @@ public class BootcampAdapter implements IBootcampPersistencePort {
 
         return bootcampEntityMapper.toModelList(bootcampEntityList);
     }
+
+    @Override
+    public Optional<Bootcamp> findBootcampByName(String name) {
+        BootcampEntity bootcampEntity = bootcampRepository.findByName(name);
+        return bootcampEntity != null ? Optional.of(bootcampEntityMapper.toModel(bootcampEntity)) : Optional.empty();
+    }
+
+
 }

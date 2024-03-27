@@ -1,5 +1,6 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.BootcampAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.CapacitySizeIsNotInTheLimitException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateCapacityException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
@@ -12,10 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -118,6 +116,23 @@ class BootcampUseCaseTest {
 
         assertThrows(NoDataFoundException.class, () -> {
             bootcampUseCase.getAllBootcamp(0, 2, "", true);
+        });
+    }
+
+    @Test
+    void shouldThrowExceptionWhenBootcampExists(){
+
+        List<Capacity> capacityList = Arrays.asList(
+                new Capacity(1L, "Capacidad 1", "Description", Collections.emptyList()),
+                new Capacity(2L, "Capacidad 2", "Description", Collections.emptyList())
+        );
+
+        Bootcamp bootcamp = new Bootcamp(1L, "Bootcamp de prueba", "Description", capacityList);
+
+        when(bootcampPersistencePort.findBootcampByName(bootcamp.getName())).thenReturn(Optional.of(bootcamp));
+
+        assertThrows(BootcampAlreadyExistsException.class, () -> {
+            bootcampUseCase.saveBootcamp(bootcamp);
         });
     }
 }

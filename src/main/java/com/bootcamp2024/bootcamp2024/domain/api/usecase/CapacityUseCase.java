@@ -10,6 +10,7 @@ import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class CapacityUseCase implements ICapacityServicePort {
@@ -41,7 +42,13 @@ public class CapacityUseCase implements ICapacityServicePort {
 
     @Override
     public void saveCapacity(Capacity capacity) {
-        // Verificar si hay IDs duplicados
+        //Verificar si hay una capacidad con el mismo nombre
+
+        Optional<Capacity> existingCapacity = capacityPersistencePort.findCapacityByName(capacity.getName());
+        if (existingCapacity.isPresent()){
+            throw new CapacityAlreadyExistsException();
+        }
+        // Verificar si hay tecnologias duplicadas
         if (ListHelper.hasDuplicatesTechnology(capacity.getTechnologyList())) {
             throw new DuplicateTechnologyException();
         }
@@ -60,6 +67,7 @@ public class CapacityUseCase implements ICapacityServicePort {
         return capacityPersistencePort.findCapacityByName(name)
                 .orElseThrow(() -> new CapacityNotFoundException(name));
     }
+
 
 
     private void checkTechnology(List<Technology> technologyList){

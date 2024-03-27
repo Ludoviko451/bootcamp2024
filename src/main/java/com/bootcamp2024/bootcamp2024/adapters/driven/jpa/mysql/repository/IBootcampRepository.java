@@ -14,4 +14,5 @@ public interface IBootcampRepository extends JpaRepository <BootcampEntity, Long
     @Query("SELECT b from BootcampEntity b LEFT JOIN b.capacityList c GROUP BY b.id ORDER BY COUNT(c) ASC")
     Page<BootcampEntity> findAllOrderByCapacitiesCountAsc(Pageable pageable);
 
+    BootcampEntity findByName (String name);
 }
