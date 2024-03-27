@@ -1,6 +1,7 @@
 package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
 import com.bootcamp2024.bootcamp2024.domain.api.usecase.TechnologyUseCase;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
@@ -101,10 +102,10 @@ import static org.mockito.Mockito.*;
      }
 
      @Test
-     void shouldThrowNoDataFoundExceptionWheTechnologyNotExist(){
+     void shouldThrowTechnologyNotFoundExceptionWhenTechnologyNotExist(){
         when(technologyPersistencePort.findByName("C#")).thenReturn(Optional.empty());
 
-        assertThrows(NoDataFoundException.class, () -> technologyUseCase.findTechnologyByName("C#"));
+        assertThrows(TechnologyNotFoundException.class, () -> technologyUseCase.findTechnologyByName("C#"));
      }
    }
 
