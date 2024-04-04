@@ -27,4 +27,9 @@ public class Constants {
 
     public static final String CAPACITY_ALREADY_EXISTS = "La capacidad que tu quieres crear ya existe";
     public static final String BOOTCAMP_ALREADY_EXISTS = "El bootcamp que tu quieres crear ya existe";
+
+    public static final String VERSION_STARTDATE_IS_BEFORE_ENDDATE = "La fecha de inicio no debe ser antes de la fecha fin";
+    public static final String VERSION_NOT_VALID_FIELD_MESSAGE = "El campo %s no es valido";
+    public static final String BOOTCAMP_NOT_FOUND_MESSAGE = "El bootcamp con el nombre %s no existe";
+    public static final String VERSION_MAXIMUM_CAPACITY_PASS_THE_LIMIT = "La capacidad maxima %s no es valida, debe ser mayor a 0 y menor a 50";
  }

@@ -39,5 +39,17 @@ public class BootcampControllerAdvisor {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(BootcampNotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleBootcampNotFoundException(BootcampNotFoundException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(Constants.BOOTCAMP_NOT_FOUND_MESSAGE, e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(BootcampIdNameMistMatchException.class)
+    public ResponseEntity<ExceptionResponse> handleBootcampIdNameMistMatchException(BootcampIdNameMistMatchException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
+
 
 }

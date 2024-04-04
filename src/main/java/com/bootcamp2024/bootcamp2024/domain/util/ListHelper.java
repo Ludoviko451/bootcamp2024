@@ -1,14 +1,17 @@
 package com.bootcamp2024.bootcamp2024.domain.util;
 
+import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
 import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
+import com.bootcamp2024.bootcamp2024.domain.spi.IBootcampPersistencePort;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 public class ListHelper {
+
+
+
     /**
      * Verifica si hay elementos duplicados en una lista de capacidades.
      *
@@ -34,4 +37,10 @@ public class ListHelper {
         // Si el tamaño del conjunto es diferente al tamaño de la lista, significa que hay duplicados
         return uniqueTechnology.size() != technologyList.size();
     }
+
+    public static boolean isValidField(String field) {
+        List<String> validFields = Arrays.asList("id", "maximumCapacity", "startDate", "endDate",  "bootcamp");
+        return validFields.contains(field);
+    }
+
 }

@@ -11,5 +11,7 @@ public class ParametersConstants {
 
         public static final String MIN_PAGE_MESSAGE = "La pagina debe ser igual o mayor a 0";
         public static final String MIN_SIZE_MESSAGE = "El tamaño debe ser mayor que 0";
+
+        public static final String DEFAULT_FIELD = "id";
     }
 
