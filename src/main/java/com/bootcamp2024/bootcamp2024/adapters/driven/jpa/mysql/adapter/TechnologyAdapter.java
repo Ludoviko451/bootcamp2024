@@ -3,14 +3,13 @@ package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ElementNotFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NotValidFieldForVersionException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
-import org.springframework.data.domain.PageRequest;
+import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -57,29 +56,18 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
     }
 
 
+
+
     @Override
-    public List<Technology> getAllTechnology(Integer page, Integer size, String sortBy) {
-
-        Pageable pagination;
-        if (sortBy != null) {
-            Sort.Direction direction = Sort.Direction.ASC;
-            String sortField = "name"; // Campo predeterminado
-
-            if ("desc".equalsIgnoreCase(sortBy)) {
-                direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(sortBy)) {
-                throw new ParameterNotValidForOrderbyException(sortBy);
-            }
-
-            pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
-        } else {
-            pagination = PageRequest.of(page, size);
+    public List<Technology> getAllTechnology(Integer page, Integer size, String sortBy, String field) {
+        if (!ListHelper.isValidField(field, "type1")){
+            throw new NotValidFieldForVersionException(field);
         }
-
+        Pageable pagination = ListHelper.createPageable(page, size, sortBy , "id");
         List<TechnologyEntity> technologyEntities = technologyRepository.findAll(pagination).getContent();
-
         return technologyEntityMapper.toModelList(technologyEntities);
     }
+
 
     @Override
     public Technology updateTechnology(Technology technology) {

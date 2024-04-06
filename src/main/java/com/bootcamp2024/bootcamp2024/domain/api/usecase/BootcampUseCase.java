@@ -7,11 +7,9 @@ import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
 import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
 import com.bootcamp2024.bootcamp2024.domain.spi.IBootcampPersistencePort;
 import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
-
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 public class BootcampUseCase implements IBootcampServicePort {
 
@@ -43,20 +41,25 @@ public class BootcampUseCase implements IBootcampServicePort {
     }
 
     @Override
-    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities) {
+    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities, String field) {
 
 
         if (page < 0 || size < 0){
             throw new PageAndSizeLessThanZeroException();
         }
 
-        List<Bootcamp> bootcampList = bootcampPersistencePort.getAllBootcamp(page, size, orderBy, capacities);
+        List<Bootcamp> bootcampList = bootcampPersistencePort.getAllBootcamp(page, size, orderBy, capacities, field);
 
         if (bootcampList.isEmpty()) {
             throw new NoDataFoundException();
         }
 
         return bootcampList;
+    }
+
+    @Override
+    public Bootcamp findBootcampById(Long id) {
+        return bootcampPersistencePort.findBootcampById(id);
     }
 
     private void checkCapacity(List<Capacity> capacityList){

@@ -8,5 +8,7 @@ public interface IBootcampServicePort {
 
     void saveBootcamp(Bootcamp bootcamp);
 
-    List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities);
+    List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities, String field);
+
+    Bootcamp findBootcampById(Long id);
 }

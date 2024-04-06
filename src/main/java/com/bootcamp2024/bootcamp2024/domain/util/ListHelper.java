@@ -1,9 +1,10 @@
 package com.bootcamp2024.bootcamp2024.domain.util;
-
-import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
 import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
-import com.bootcamp2024.bootcamp2024.domain.spi.IBootcampPersistencePort;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.*;
 
@@ -11,6 +12,8 @@ import java.util.*;
 public class ListHelper {
 
 
+    private ListHelper() {
+    }
 
     /**
      * Verifica si hay elementos duplicados en una lista de capacidades.
@@ -38,9 +41,30 @@ public class ListHelper {
         return uniqueTechnology.size() != technologyList.size();
     }
 
-    public static boolean isValidField(String field) {
-        List<String> validFields = Arrays.asList("id", "maximumCapacity", "startDate", "endDate",  "bootcamp");
+    public static boolean isValidField(String field, String type) {
+        List<String> validFields = new ArrayList<>();
+        if (type.equals("type1")) {
+            validFields = Arrays.asList("id", "name", "description");
+        } else if (type.equals("type2")) {
+            validFields = Arrays.asList("id", "maximumCapacity", "startDate", "endDate",  "bootcamp");
+        }
         return validFields.contains(field);
     }
 
+    // Método estático para crear el objeto Pageable con paginación y ordenamiento
+    public static Pageable createPageable(Integer page, Integer size, String sortBy, String field) {
+        Sort.Direction direction = Sort.Direction.ASC;
+        String sortField = field; // Campo predeterminado
+
+
+        if (sortBy != null) {
+            if ("desc".equalsIgnoreCase(sortBy)) {
+                direction = Sort.Direction.DESC;
+            } else if (!"asc".equalsIgnoreCase(sortBy)) {
+                throw new ParameterNotValidForOrderbyException(sortBy);
+            }
+        }
+
+        return PageRequest.of(page, size, Sort.by(direction, sortField));
+    }
 }

@@ -3,7 +3,6 @@ package com.bootcamp2024.bootcamp2024.configuration;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter.BootcampAdapter;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.IBootcampEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.IBootcampRepository;
-import com.bootcamp2024.bootcamp2024.configuration.CapacityBeanConfiguration;
 import com.bootcamp2024.bootcamp2024.domain.api.IBootcampServicePort;
 import com.bootcamp2024.bootcamp2024.domain.api.usecase.BootcampUseCase;
 import com.bootcamp2024.bootcamp2024.domain.spi.IBootcampPersistencePort;

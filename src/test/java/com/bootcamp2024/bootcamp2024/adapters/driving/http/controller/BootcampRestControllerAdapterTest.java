@@ -71,6 +71,7 @@ class BootcampRestControllerAdapterTest {
             Integer page = 0;
             Integer size = 10;
             String sortBy = "";
+            String field = "id";
             boolean capacities = false;
 
             List<Bootcamp> bootcampList = Arrays.asList(
@@ -83,11 +84,11 @@ class BootcampRestControllerAdapterTest {
                     new BootcampResponse(2L, "Bootcamp 2", "Description 2", Collections.emptyList())
             );
 
-            when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)).thenReturn(bootcampList);
+            when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
             when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
             // Act
-            ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities);
+            ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
             List<BootcampResponse> bootcampResponses = responseEntity.getBody();
             // Assert
@@ -95,7 +96,7 @@ class BootcampRestControllerAdapterTest {
             assertEquals(expectedResponses, responseEntity.getBody());
             assertEquals("Bootcamp 1", bootcampResponses.get(0).getName());
             assertEquals("Bootcamp 2", bootcampResponses.get(1).getName());
-            verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities);
+            verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities, field);
             verify(bootcampResponseMapper, times(1)).toBootcampResponseList(bootcampList);
         }
 
@@ -106,6 +107,7 @@ class BootcampRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "asc";
         boolean capacities = false;
+        String field = "id";
 
         List<Bootcamp> bootcampList = Arrays.asList(
                 new Bootcamp(1L, "ABootcamp 1", "Description 1", Collections.emptyList()),
@@ -117,11 +119,11 @@ class BootcampRestControllerAdapterTest {
                 new BootcampResponse(2L, "ZBootcamp 2", "Description 2", Collections.emptyList())
         );
 
-        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)).thenReturn(bootcampList);
+        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities);
+        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
         // Assert
@@ -129,7 +131,7 @@ class BootcampRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ABootcamp 1", bootcampResponses.get(0).getName());
         assertEquals("ZBootcamp 2", bootcampResponses.get(1).getName());
-        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities);
+        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities, field);
         verify(bootcampResponseMapper, times(1)).toBootcampResponseList(bootcampList);
     }
 
@@ -139,6 +141,7 @@ class BootcampRestControllerAdapterTest {
         Integer page = 0;
         Integer size = 10;
         String sortBy = "desc";
+        String field = "id";
         boolean capacities = false;
 
         List<Bootcamp> bootcampList = Arrays.asList(
@@ -151,11 +154,11 @@ class BootcampRestControllerAdapterTest {
                 new BootcampResponse(1L, "ABootcamp 1", "Description 1", Collections.emptyList())
         );
 
-        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)).thenReturn(bootcampList);
+        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities);
+        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
         // Assert
@@ -163,7 +166,7 @@ class BootcampRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(0).getName());
         assertEquals("ABootcamp 1", bootcampResponses.get(1).getName());
-        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities);
+        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities, field);
         verify(bootcampResponseMapper, times(1)).toBootcampResponseList(bootcampList);
     }
 
@@ -174,7 +177,7 @@ class BootcampRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "asc";
         boolean capacities = true;
-
+        String field = "id";
         List<CapacityBootcampResponse> capacityBootcampList = Arrays.asList(
                 new CapacityBootcampResponse(1L, "Capacidad 1", Collections.emptyList()),
                 new CapacityBootcampResponse(2L, "Capacidad 2", Collections.emptyList())
@@ -195,11 +198,11 @@ class BootcampRestControllerAdapterTest {
                 new BootcampResponse(1L, "ABootcamp 1", "Description 1", Collections.emptyList())
         );
 
-        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)).thenReturn(bootcampList);
+        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities);
+        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
         // Assert
@@ -207,7 +210,7 @@ class BootcampRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(0).getName());
         assertEquals("ABootcamp 1", bootcampResponses.get(1).getName());
-        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities);
+        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities, field);
         verify(bootcampResponseMapper, times(1)).toBootcampResponseList(bootcampList);
     }
 
@@ -218,6 +221,7 @@ class BootcampRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "asc";
         boolean capacities = true;
+        String field = "id";
 
         List<CapacityBootcampResponse> capacityBootcampList = Arrays.asList(
                 new CapacityBootcampResponse(1L, "Capacidad 1", Collections.emptyList()),
@@ -239,11 +243,11 @@ class BootcampRestControllerAdapterTest {
                 new BootcampResponse(2L, "ZBootcamp 2", "Description 2", capacityBootcampList)
         );
 
-        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities)).thenReturn(bootcampList);
+        when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities);
+        ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
         // Assert
@@ -251,7 +255,7 @@ class BootcampRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(1).getName());
         assertEquals("ABootcamp 1", bootcampResponses.get(0).getName());
-        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities);
+        verify(bootcampServicePort, times(1)).getAllBootcamp(page, size, sortBy, capacities, field);
         verify(bootcampResponseMapper, times(1)).toBootcampResponseList(bootcampList);
     }
     }

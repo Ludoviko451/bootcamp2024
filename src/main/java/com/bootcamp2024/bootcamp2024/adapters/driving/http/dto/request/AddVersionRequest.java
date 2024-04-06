@@ -1,22 +1,26 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
 public class AddVersionRequest {
 
 
+    @NotNull
     private final int maximumCapacity;
 
+    @NotNull
+    private final String startDate;
 
-    private final LocalDate startDate;
+    @NotNull
+    private final String endDate;
 
-    private final LocalDate endDate;
-
-    private final BootcampVersionRequest bootcampVersionRequest;
+    @Valid
+    @NotNull
+    private final Long bootcampId;
 }

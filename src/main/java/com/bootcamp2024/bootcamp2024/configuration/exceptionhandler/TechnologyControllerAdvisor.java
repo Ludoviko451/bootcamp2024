@@ -1,10 +1,5 @@
 package com.bootcamp2024.bootcamp2024.configuration.exceptionhandler;
-
-
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.DuplicateTechnologyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologySizeIsNotInTheLimitException;
 import com.bootcamp2024.bootcamp2024.configuration.Constants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

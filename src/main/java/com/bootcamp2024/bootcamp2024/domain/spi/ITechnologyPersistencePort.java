@@ -14,7 +14,7 @@ public interface ITechnologyPersistencePort {
     void deleteTechnology(Long id);
 
     Optional<Technology> findByName(String name);
-    List<Technology> getAllTechnology(Integer page, Integer size, String sortBy);
+    List<Technology> getAllTechnology(Integer page, Integer size, String sortBy, String field);
 
     Technology updateTechnology(Technology technology);
 

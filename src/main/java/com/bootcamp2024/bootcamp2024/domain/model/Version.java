@@ -1,20 +1,18 @@
 package com.bootcamp2024.bootcamp2024.domain.model;
 
-import java.time.LocalDate;
-
 public class Version {
     private final long id;
 
 
     private final int maximumCapacity;
 
-    private final LocalDate startDate;
+    private final String startDate;
 
-    private final LocalDate endDate;
+    private final String endDate;
 
     private final Bootcamp bootcamp;
 
-    public Version(long id, int maximumCapacity, LocalDate startDate, LocalDate endDate, Bootcamp bootcamp) {
+    public Version(long id, int maximumCapacity, String startDate, String endDate, Bootcamp bootcamp) {
         this.id = id;
         this.maximumCapacity = maximumCapacity;
         this.startDate = startDate;
@@ -31,11 +29,11 @@ public class Version {
         return maximumCapacity;
     }
 
-    public LocalDate getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public LocalDate getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 

@@ -66,6 +66,7 @@ class CapacityRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "";
         boolean technologies = false;
+        String field = "id";
 
         List<Capacity> capacityList = Arrays.asList(
                 new Capacity(1L, "Capacity 1", "Description 1", Collections.emptyList()),
@@ -77,11 +78,11 @@ class CapacityRestControllerAdapterTest {
                 new CapacityResponse(2L, "Capacity 2", "Description 2", Collections.emptyList())
         );
 
-        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
         // Assert
@@ -89,7 +90,7 @@ class CapacityRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("Capacity 1", capacityResponses.get(0).getName());
         assertEquals("Capacity 2", capacityResponses.get(1).getName());
-        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies, field);
         verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 
@@ -100,6 +101,7 @@ class CapacityRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "asc";
         boolean technologies = false;
+        String field = "id";
 
         List<Capacity> capacityList = Arrays.asList(
                 new Capacity(1L, "ACapacity 1", "Description 1", Collections.emptyList()),
@@ -111,11 +113,11 @@ class CapacityRestControllerAdapterTest {
                 new CapacityResponse(2L, "BCapacity 2", "Description 2", Collections.emptyList())
         );
 
-        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
         // Assert
@@ -123,7 +125,7 @@ class CapacityRestControllerAdapterTest {
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("BCapacity 2", capacityResponses.get(1).getName());
         assertEquals("ACapacity 1", capacityResponses.get(0).getName());
-        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies, field);
         verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 
@@ -133,6 +135,7 @@ class CapacityRestControllerAdapterTest {
         Integer page = 0;
         Integer size = 10;
         String sortBy = "desc";
+        String field = "id";
         boolean technologies = false;
 
         List<Capacity> capacityList = Arrays.asList(
@@ -145,11 +148,11 @@ class CapacityRestControllerAdapterTest {
                 new CapacityResponse(1L, "ACapacity 1", "Description 1", Collections.emptyList())
         );
 
-        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
         // Assert
@@ -158,7 +161,7 @@ class CapacityRestControllerAdapterTest {
         assertEquals("ZCapacity 2", capacityResponses.get(0).getName());
         assertEquals("ACapacity 1", capacityResponses.get(1).getName());
 
-        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies, field);
         verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 
@@ -167,7 +170,8 @@ class CapacityRestControllerAdapterTest {
         Integer page = 0;
         Integer size = 10;
         String sortBy = "asc";
-        Boolean technologies = true;
+        boolean technologies = true;
+        String field = "id";
         List<Technology> technologyList = List.of(
                 new Technology(1L, "Technology", "Description")
         );
@@ -185,11 +189,11 @@ class CapacityRestControllerAdapterTest {
                 new CapacityResponse(1L, "Capacity 1", "Description 1", Collections.emptyList())
         );
 
-        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
         // Assert
@@ -198,7 +202,7 @@ class CapacityRestControllerAdapterTest {
         assertEquals("Capacity 2", capacityResponses.get(0).getName());
         assertEquals("Capacity 1", capacityResponses.get(1).getName());
 
-        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies, field);
         verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 
@@ -208,6 +212,8 @@ class CapacityRestControllerAdapterTest {
         Integer size = 10;
         String sortBy = "desc";
         boolean technologies = true;
+        String field = "id";
+
         List<Technology> technologyList = List.of(
                 new Technology(1L, "Technology", "Description")
         );
@@ -225,11 +231,11 @@ class CapacityRestControllerAdapterTest {
                 new CapacityResponse(2L, "Capacity 2", "Description 2", technologyCapacityResponseList)
         );
 
-        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies)).thenReturn(capacityList);
+        when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
         // Act
-        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies);
+        ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
         // Assert
@@ -238,7 +244,7 @@ class CapacityRestControllerAdapterTest {
         assertEquals("Capacity 2", capacityResponses.get(1).getName());
         assertEquals("Capacity 1", capacityResponses.get(0).getName());
 
-        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies);
+        verify(capacityServicePort, times(1)).getAllCapacity(page, size, sortBy, technologies, field);
         verify(capacityResponseMapper, times(1)).toCapacityResponseList(capacityList);
     }
 }

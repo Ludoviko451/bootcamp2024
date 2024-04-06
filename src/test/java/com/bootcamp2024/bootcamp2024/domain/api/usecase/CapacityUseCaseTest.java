@@ -52,9 +52,9 @@ class CapacityUseCaseTest {
 
         List<Capacity> capacityList = Arrays.asList(capacity1, capacity2);
 
-        when(capacityPersistencePort.getAllCapacity(anyInt(), anyInt(), anyString(), anyBoolean())).thenReturn(capacityList);
+        when(capacityPersistencePort.getAllCapacity(anyInt(), anyInt(), anyString(), anyBoolean(), anyString())).thenReturn(capacityList);
 
-        List<Capacity> capacityResult = capacityUseCase.getAllCapacity(0, 2, "", true);
+        List<Capacity> capacityResult = capacityUseCase.getAllCapacity(0, 2, "", true, "id");
 
         assertEquals(2, capacityResult.size());
         assertEquals("capacity1", capacityResult.get(0).getName());
@@ -64,10 +64,10 @@ class CapacityUseCaseTest {
 
     @Test
     void shouldThrowNoDataFoundExceptionWhenCapacityNoExists(){
-        when(capacityPersistencePort.getAllCapacity(anyInt(), anyInt(), anyString(), anyBoolean())).thenReturn(Collections.emptyList());
+        when(capacityPersistencePort.getAllCapacity(anyInt(), anyInt(), anyString(), anyBoolean(), anyString())).thenReturn(Collections.emptyList());
 
         assertThrows(NoDataFoundException.class, () -> {
-            capacityUseCase.getAllCapacity(0, 2, "", true);
+            capacityUseCase.getAllCapacity(0, 2, "", true, "id");
         });
     }
 
@@ -134,18 +134,19 @@ class CapacityUseCaseTest {
         int page= 0;
         int size = 5;
         String orderBy = "asc";
+        String field = "id";
         boolean technologies = false;
 
         List<Capacity> capacityList = Arrays.asList(
                 new Capacity(1L, "capacidad", "description", Collections.emptyList())
         );
 
-        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies)).thenReturn(capacityList);
+        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies, field)).thenReturn(capacityList);
 
-        List<Capacity> capacityResult = capacityUseCase.getAllCapacity(page, size, orderBy, technologies);
+        List<Capacity> capacityResult = capacityUseCase.getAllCapacity(page, size, orderBy, technologies, field);
 
         assertEquals(capacityList, capacityResult);
-        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies);
+        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies, field);
     }
     @Test
     void shouldReturnNoDataFoundExceptionWhenCapacitiesNoExist(){
@@ -154,15 +155,15 @@ class CapacityUseCaseTest {
         int size = 5;
         String orderBy = "asc";
         boolean technologies = false;
+        String field = "id";
 
-
-        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies)).thenReturn(Collections.emptyList());
+        when(capacityPersistencePort.getAllCapacity(page,size,orderBy,technologies, field)).thenReturn(Collections.emptyList());
 
         assertThrows(NoDataFoundException.class, () -> {
-            capacityUseCase.getAllCapacity(page, size, orderBy, technologies);
+            capacityUseCase.getAllCapacity(page, size, orderBy, technologies, field);
         });
 
-        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies);
+        verify(capacityPersistencePort, times(1)).getAllCapacity(page,size,orderBy, technologies,field);
     }
 
     @Test

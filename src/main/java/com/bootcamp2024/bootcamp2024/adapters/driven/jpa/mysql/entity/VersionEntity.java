@@ -1,6 +1,4 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity;
-
-import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

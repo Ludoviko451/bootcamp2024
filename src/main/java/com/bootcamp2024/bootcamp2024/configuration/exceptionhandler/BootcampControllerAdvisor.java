@@ -51,5 +51,10 @@ public class BootcampControllerAdvisor {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(BootcampNameOrIdIsNullException.class)
+    public ResponseEntity<ExceptionResponse> handleBootcampNameOrIdIsNullException(BootcampNameOrIdIsNullException e) {
+        ExceptionResponse response = new ExceptionResponse(String.format(e.getMessage()), HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now());
+        return ResponseEntity.badRequest().body(response);
+    }
 
 }

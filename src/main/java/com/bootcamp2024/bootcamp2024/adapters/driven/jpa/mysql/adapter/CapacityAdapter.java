@@ -1,14 +1,13 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.CapacityEntity;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NotValidFieldForVersionException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.ICapacityEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.ICapacityRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
 import com.bootcamp2024.bootcamp2024.domain.spi.ICapacityPersistencePort;
+import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
@@ -29,23 +28,11 @@ public class CapacityAdapter implements ICapacityPersistencePort {
 
 
     @Override
-    public List<Capacity> getAllCapacity(Integer page, Integer size, String sortBy, boolean technologies) {
-        Pageable pagination;
-        if (sortBy != null) {
-            Sort.Direction direction = Sort.Direction.ASC;
-            String sortField = "name"; // Campo predeterminado
-
-            if ("desc".equalsIgnoreCase(sortBy)) {
-                direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(sortBy)) {
-                throw new ParameterNotValidForOrderbyException(sortBy);
-            }
-
-            pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
-        } else {
-            pagination = PageRequest.of(page, size);
+    public List<Capacity> getAllCapacity(Integer page, Integer size, String sortBy, boolean technologies, String field) {
+        if (!ListHelper.isValidField(field, "type1")){
+            throw new NotValidFieldForVersionException(field);
         }
-
+        Pageable pagination = ListHelper.createPageable(page, size, sortBy, field);
 
         Page<CapacityEntity> capacityPage;
         if (technologies) {

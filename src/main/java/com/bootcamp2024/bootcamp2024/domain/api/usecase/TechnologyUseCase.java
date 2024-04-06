@@ -49,11 +49,11 @@ public class TechnologyUseCase implements ITechnologyServicePort {
 
 
     @Override
-    public List<Technology> getAllTechnology(Integer page, Integer size, String sortBy) {
+    public List<Technology> getAllTechnology(Integer page, Integer size, String sortBy, String field) {
         if (page < 0 || size < 0){
             throw new PageAndSizeLessThanZeroException();
         }
-        List<Technology> technologyList = tecnologiaPersistencePort.getAllTechnology(page, size, sortBy);
+        List<Technology> technologyList = tecnologiaPersistencePort.getAllTechnology(page, size, sortBy, field);
 
         if (technologyList.isEmpty()){
             throw new NoDataFoundException();

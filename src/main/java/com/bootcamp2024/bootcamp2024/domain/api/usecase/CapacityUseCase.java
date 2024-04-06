@@ -7,11 +7,9 @@ import com.bootcamp2024.bootcamp2024.domain.model.Capacity;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ICapacityPersistencePort;
 import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
-
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 
 public class CapacityUseCase implements ICapacityServicePort {
 
@@ -24,12 +22,12 @@ public class CapacityUseCase implements ICapacityServicePort {
     private final ITechnologyServicePort technologyServicePort;
 
     @Override
-    public List<Capacity> getAllCapacity(Integer page, Integer size, String orderBy, boolean technologies) {
+    public List<Capacity> getAllCapacity(Integer page, Integer size, String orderBy, boolean technologies, String field) {
         if (page < 0 || size < 0){
             throw new PageAndSizeLessThanZeroException();
         }
 
-        List<Capacity> capacityList = capacityPersistencePort.getAllCapacity(page, size, orderBy, technologies);
+        List<Capacity> capacityList = capacityPersistencePort.getAllCapacity(page, size, orderBy, technologies, field);
         if (capacityList.isEmpty()){
             throw  new NoDataFoundException();
         }
@@ -73,11 +71,4 @@ public class CapacityUseCase implements ICapacityServicePort {
     private void checkTechnology(List<Technology> technologyList){
         technologyList.forEach(technology -> technologyServicePort.findTechnologyByName(technology.getName()));
     }
-//    private boolean hasDuplicates(List<Technology> technologyList) {
-//        // Crear un conjunto (Set) a partir de la lista para eliminar duplicados
-//        Set<String> uniqueTechnology = new HashSet<>(Set.copyOf(technologyList.stream().map(Technology::getName).toList()));
-//        // Si el tamaño del conjunto es diferente al tamaño de la lista, significa que hay duplicados
-//        return uniqueTechnology.size() != technologyList.size();
-//    }
-
 }

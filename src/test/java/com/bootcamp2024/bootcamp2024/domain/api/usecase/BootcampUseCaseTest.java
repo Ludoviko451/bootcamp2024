@@ -101,9 +101,9 @@ class BootcampUseCaseTest {
                 new Bootcamp(1L, "Bootcamp 2", "Description", capacityList)
         );
 
-        when(bootcampPersistencePort.getAllBootcamp(anyInt(), anyInt(), anyString(), anyBoolean())).thenReturn(bootcampList);
+        when(bootcampPersistencePort.getAllBootcamp(anyInt(), anyInt(), anyString(), anyBoolean(), anyString())).thenReturn(bootcampList);
 
-        List<Bootcamp> bootcampResult = bootcampUseCase.getAllBootcamp(0, 2, "", false);
+        List<Bootcamp> bootcampResult = bootcampUseCase.getAllBootcamp(0, 2, "", false, "");
 
         assertEquals(2, bootcampResult.size());
         assertEquals("Bootcamp 1", bootcampResult.get(0).getName());
@@ -112,10 +112,10 @@ class BootcampUseCaseTest {
 
     @Test
     void shouldThrowNoDataFoundExceptionWhenBootcampNoExist(){
-        when(bootcampPersistencePort.getAllBootcamp(anyInt(), anyInt(), anyString(), anyBoolean())).thenReturn(Collections.emptyList());
+        when(bootcampPersistencePort.getAllBootcamp(anyInt(), anyInt(), anyString(), anyBoolean(), anyString())).thenReturn(Collections.emptyList());
 
         assertThrows(NoDataFoundException.class, () -> {
-            bootcampUseCase.getAllBootcamp(0, 2, "", true);
+            bootcampUseCase.getAllBootcamp(0, 2, "", true, "");
         });
     }
 

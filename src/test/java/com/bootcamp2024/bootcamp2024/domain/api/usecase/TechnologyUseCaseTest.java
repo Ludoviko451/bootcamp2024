@@ -70,9 +70,9 @@ import static org.mockito.Mockito.*;
          List<Technology> technologyList = Arrays.asList(technology1, technology2);
 
          // Configuración del mock para devolver la lista de tecnologías
-         when(technologyPersistencePort.getAllTechnology(anyInt(), anyInt(), anyString())).thenReturn(technologyList);
+         when(technologyPersistencePort.getAllTechnology(anyInt(), anyInt(), anyString(), anyString())).thenReturn(technologyList);
 
-         List<Technology> resultado = technologyUseCase.getAllTechnology(0, 2, "");
+         List<Technology> resultado = technologyUseCase.getAllTechnology(0, 2, "", "id");
 
          // Comparar solo los nombres de las tecnologías
          assertEquals(2, resultado.size());
@@ -85,9 +85,11 @@ import static org.mockito.Mockito.*;
          int page = 0;
          int size = 10;
          String orderBy = "";
-         when(technologyPersistencePort.getAllTechnology(page, size, orderBy)).thenReturn(Collections.emptyList());
+         String field = "id";
 
-         assertThrows(NoDataFoundException.class, () -> technologyUseCase.getAllTechnology(page, size, orderBy));
+         when(technologyPersistencePort.getAllTechnology(page, size, orderBy, field)).thenReturn(Collections.emptyList());
+
+         assertThrows(NoDataFoundException.class, () -> technologyUseCase.getAllTechnology(page, size, orderBy, field));
      }
 
      @Test

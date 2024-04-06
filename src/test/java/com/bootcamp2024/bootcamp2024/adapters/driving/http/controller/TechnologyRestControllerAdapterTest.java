@@ -64,7 +64,7 @@ class TechnologyRestControllerAdapterTest {
          Technology technology2 = new Technology(2L, "Python", "Lenguaje de programacion");
          int page = 0;
          int size = 5;
-
+         String field = "id";
 
          List<Technology> technologyList = Arrays.asList(technology1, technology2);
 
@@ -73,11 +73,11 @@ class TechnologyRestControllerAdapterTest {
          technologyResponse.add(new TechnologyResponse(1L, "Java", "Lenguaje de programacion"));
          technologyResponse.add(new TechnologyResponse(2L, "Python", "Lenguaje de programacion"));
 
-         when(technologyServicePort.getAllTechnology(anyInt(), anyInt(), anyString())).thenReturn(technologyList);
+         when(technologyServicePort.getAllTechnology(anyInt(), anyInt(), anyString(), anyString())).thenReturn(technologyList);
 
          when(technologyResponseMapper.toTechnologyResponseList(technologyList)).thenReturn(technologyResponse);
 
-         ResponseEntity<List<TechnologyResponse>> responseEntity = technologyRestControllerAdapter.getAllTechnology(page,size, sortBy);
+         ResponseEntity<List<TechnologyResponse>> responseEntity = technologyRestControllerAdapter.getAllTechnology(page,size, sortBy, field);
 
          assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
          assertEquals(technologyResponse, responseEntity.getBody());

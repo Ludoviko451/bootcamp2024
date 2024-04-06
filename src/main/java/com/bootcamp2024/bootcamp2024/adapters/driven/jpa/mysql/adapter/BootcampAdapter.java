@@ -1,19 +1,20 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.BootcampEntity;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NotValidFieldForVersionException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.IBootcampEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.IBootcampRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Bootcamp;
 import com.bootcamp2024.bootcamp2024.domain.spi.IBootcampPersistencePort;
+import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class BootcampAdapter implements IBootcampPersistencePort {
 
     private final IBootcampRepository bootcampRepository;
@@ -30,25 +31,14 @@ public class BootcampAdapter implements IBootcampPersistencePort {
     }
 
     @Override
-    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String sortBy, boolean capacities) {
-        Pageable pagination;
-        //Agregar una validacion de recibir una pagina y un size mayor a 0
-        //Agregar campo y direccion de sort
-
-        if (sortBy != null) {
-            Sort.Direction direction = Sort.Direction.ASC;
-            String sortField = "name"; // Campo predeterminado
-
-            if ("desc".equalsIgnoreCase(sortBy)) {
-                direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(sortBy)) {
-                throw new ParameterNotValidForOrderbyException(sortBy);
-            }
-
-            pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
-        } else {
-            pagination = PageRequest.of(page, size);
+    public List<Bootcamp> getAllBootcamp(Integer page, Integer size, String sortBy, boolean capacities, String field) {
+        if (!ListHelper.isValidField(field, "type1")){
+            throw new NotValidFieldForVersionException(field);
         }
+
+        Pageable pagination = ListHelper.createPageable(page, size, sortBy, field);
+
+
         Page<BootcampEntity> bootcampPage;
 
         if (capacities){
@@ -70,6 +60,14 @@ public class BootcampAdapter implements IBootcampPersistencePort {
         BootcampEntity bootcampEntity = bootcampRepository.findByName(name);
         return bootcampEntity != null ? Optional.of(bootcampEntityMapper.toModel(bootcampEntity)) : Optional.empty();
     }
+
+    @Override
+    public Bootcamp findBootcampById(Long id) {
+
+        Optional<BootcampEntity> bootcampEntity = bootcampRepository.findById(id);
+        return bootcampEntity.map(bootcampEntityMapper::toModel).orElse(null);
+    }
+
 
 
 }

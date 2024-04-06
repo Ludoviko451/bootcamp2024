@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface IVersionRequestMapper {
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "bootcamp", source = "addVersionRequest.bootcampVersionRequest")
+    @Mapping(target = "bootcamp.id", source = "addVersionRequest.bootcampId")
     Version addRequestToVersion(AddVersionRequest addVersionRequest);
 
 }

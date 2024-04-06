@@ -8,7 +8,9 @@ public interface IBootcampPersistencePort {
 
     void saveBootcamp(Bootcamp bootcamp);
 
-    List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities);
+    List<Bootcamp> getAllBootcamp(Integer page, Integer size, String orderBy, boolean capacities, String field);
 
     Optional<Bootcamp> findBootcampByName(String name);
+
+    Bootcamp findBootcampById(Long id);
 }

@@ -42,7 +42,7 @@ public class CapacityRestControllerAdapter {
 
     @Operation(summary = "Get All Capacities")
     @GetMapping("/")
-    public ResponseEntity<List<CapacityResponse>> getAllCapacity(@RequestParam(defaultValue = ParametersConstants.DEFAULT_PAGE) @Valid @Min(value = 0, message =  ParametersConstants.MIN_PAGE_MESSAGE) Integer page, @RequestParam(defaultValue = ParametersConstants.DEFAULT_SIZE) @Valid @Min(value = 1, message =  ParametersConstants.MIN_SIZE_MESSAGE)Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean tecnologies){
-        return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacity(page, size, sortBy,tecnologies)));
+    public ResponseEntity<List<CapacityResponse>> getAllCapacity(@RequestParam(defaultValue = ParametersConstants.DEFAULT_PAGE) @Valid @Min(value = 0, message =  ParametersConstants.MIN_PAGE_MESSAGE) Integer page, @RequestParam(defaultValue = ParametersConstants.DEFAULT_SIZE) @Valid @Min(value = 1, message =  ParametersConstants.MIN_SIZE_MESSAGE)Integer size, @RequestParam(required = false) String sortBy, @RequestParam Boolean tecnologies, @RequestParam(defaultValue = ParametersConstants.DEFAULT_FIELD)String field){
+        return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacity(page, size, sortBy,tecnologies, field)));
     }
 }

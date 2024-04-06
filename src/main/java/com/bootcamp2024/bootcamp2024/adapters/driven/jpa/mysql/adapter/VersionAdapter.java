@@ -1,21 +1,18 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter;
-
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.VersionEntity;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.BootcampNotFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NotValidFieldForVersionException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.ParameterNotValidForOrderbyException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.IVersionEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.IVersionRepository;
 import com.bootcamp2024.bootcamp2024.domain.model.Version;
 import com.bootcamp2024.bootcamp2024.domain.spi.IVersionPersistencePort;
 import com.bootcamp2024.bootcamp2024.domain.util.ListHelper;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class VersionAdapter implements IVersionPersistencePort {
 
 
@@ -35,31 +32,16 @@ public class VersionAdapter implements IVersionPersistencePort {
 
     @Override
     public List<Version> getAllVersion(Integer page, Integer size, String field, String sortBy, List<Long> bootcampIds) {
-        Pageable pagination;
 
         // Agregar una validación para recibir una página y un tamaño mayor a 0
         // Agregar campo y dirección de ordenamiento
-        String sortField = "";
 
-        if (ListHelper.isValidField(field)){
-            sortField = field;
-        } else {
+        if (!ListHelper.isValidField(field, "type2")){
             throw new NotValidFieldForVersionException(field);
         }
 
-        if (sortBy != null) {
-            Sort.Direction direction = Sort.Direction.ASC;
+        Pageable pagination = ListHelper.createPageable(page, size, sortBy,field);
 
-            if ("desc".equalsIgnoreCase(sortBy)) {
-                direction = Sort.Direction.DESC;
-            } else if (!"asc".equalsIgnoreCase(sortBy)) {
-                throw new ParameterNotValidForOrderbyException(sortBy);
-            }
-
-            pagination = PageRequest.of(page, size, Sort.by(direction, sortField));
-        } else {
-            pagination = PageRequest.of(page, size);
-        }
 
         Page<VersionEntity> versionPage;
 

@@ -17,7 +17,7 @@ public interface ITechnologyServicePort {
 
     Technology updateTechnology(Technology technology);
 
-    List<Technology> getAllTechnology(Integer page, Integer size, String sortBy);
+    List<Technology> getAllTechnology(Integer page, Integer size, String sortBy, String field);
 
     Technology findTechnologyByName(String name);
 }
