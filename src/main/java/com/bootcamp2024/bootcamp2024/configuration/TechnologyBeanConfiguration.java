@@ -3,6 +3,8 @@ package com.bootcamp2024.bootcamp2024.configuration;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter.TechnologyAdapter;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
+import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.token.IToken;
+import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.token.TokenAdapter;
 import com.bootcamp2024.bootcamp2024.domain.api.ITechnologyServicePort;
 import com.bootcamp2024.bootcamp2024.domain.api.usecase.TechnologyUseCase;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
@@ -18,6 +20,10 @@ public class TechnologyBeanConfiguration {
     private final ITechnologyRepository technologyRepository;
 
 
+    public IToken token(){
+
+        return new TokenAdapter();
+    }
     @Bean
     public ITechnologyPersistencePort tecnologiaPersistencePort() {
         return new TechnologyAdapter(technologyRepository, technologyEntityMapper);
@@ -25,7 +31,7 @@ public class TechnologyBeanConfiguration {
 
     @Bean
     public ITechnologyServicePort tecnologiaServicePort() {
-        return new TechnologyUseCase(tecnologiaPersistencePort());
+        return new TechnologyUseCase(tecnologiaPersistencePort(), token());
     }
 
 }

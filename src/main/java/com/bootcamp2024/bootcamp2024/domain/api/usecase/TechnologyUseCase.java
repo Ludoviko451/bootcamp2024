@@ -6,6 +6,7 @@ import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataF
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.PageAndSizeLessThanZeroException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.token.IToken;
 import com.bootcamp2024.bootcamp2024.domain.api.ITechnologyServicePort;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
@@ -19,8 +20,11 @@ import java.util.Optional;
 public class TechnologyUseCase implements ITechnologyServicePort {
     private final ITechnologyPersistencePort tecnologiaPersistencePort;
 
-    public TechnologyUseCase(ITechnologyPersistencePort tecnologiaPersistencePort) {
+    private final IToken token;
+
+    public TechnologyUseCase(ITechnologyPersistencePort tecnologiaPersistencePort, IToken token) {
         this.tecnologiaPersistencePort = tecnologiaPersistencePort;
+        this.token = token;
     }
 
 
@@ -31,6 +35,7 @@ public class TechnologyUseCase implements ITechnologyServicePort {
 
     @Override
     public void saveTechnology(Technology technology) {
+
         // Verificar si la tecnología ya existe en la base de datos
         Optional<Technology> existingTecnologia = tecnologiaPersistencePort.findByName(technology.getName());
         if (existingTecnologia.isPresent()) {

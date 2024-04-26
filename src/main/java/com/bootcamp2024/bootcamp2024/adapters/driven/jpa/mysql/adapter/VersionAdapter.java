@@ -33,8 +33,7 @@ public class VersionAdapter implements IVersionPersistencePort {
     @Override
     public List<Version> getAllVersion(Integer page, Integer size, String field, String sortBy, List<Long> bootcampIds) {
 
-        // Agregar una validación para recibir una página y un tamaño mayor a 0
-        // Agregar campo y dirección de ordenamiento
+
 
         if (!ListHelper.isValidField(field, "type2")){
             throw new NotValidFieldForVersionException(field);

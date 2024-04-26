@@ -63,7 +63,7 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
         if (!ListHelper.isValidField(field, "type1")){
             throw new NotValidFieldForVersionException(field);
         }
-        Pageable pagination = ListHelper.createPageable(page, size, sortBy , "id");
+        Pageable pagination = ListHelper.createPageable(page, size, sortBy , field);
         List<TechnologyEntity> technologyEntities = technologyRepository.findAll(pagination).getContent();
         return technologyEntityMapper.toModelList(technologyEntities);
     }

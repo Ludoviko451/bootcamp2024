@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-public class VersionAdapterTest {
+class VersionAdapterTest {
     @Mock
     private IVersionRepository versionRepository;
     @Mock
@@ -38,7 +38,7 @@ public class VersionAdapterTest {
     }
 
     @Test
-    public void testSaveVersion_ValidVersion() {
+    void testSaveVersion_ValidVersion() {
 
         String startDate = "2024-04-05";
         String endDate = "2024-04-12";
@@ -56,7 +56,7 @@ public class VersionAdapterTest {
     }
 
     @Test
-    public void testGetAllVersion_WithBootcampIds() {
+    void testGetAllVersion_WithBootcampIds() {
         List<VersionEntity> versionEntityList = Collections.emptyList();
         Page<VersionEntity> versionPage = new PageImpl<>(versionEntityList);
 
@@ -70,7 +70,7 @@ public class VersionAdapterTest {
     }
 
     @Test
-    public void testGetAllVersion_WithoutBootcampIds() {
+    void testGetAllVersion_WithoutBootcampIds() {
         List<VersionEntity> versionEntityList = Collections.emptyList();
         Page<VersionEntity> versionPage = new PageImpl<>(versionEntityList);
 
@@ -84,13 +84,9 @@ public class VersionAdapterTest {
     }
 
     @Test
-    public void testGetAllVersion_InvalidField() {
+    void testGetAllVersion_InvalidField() {
         assertThrows(NotValidFieldForVersionException.class,
                 () -> versionAdapter.getAllVersion(1, 10, "invalidField", "asc", null));
     }
 
-    @Test
-    public void testSaveVersion(){
-
-    }
 }

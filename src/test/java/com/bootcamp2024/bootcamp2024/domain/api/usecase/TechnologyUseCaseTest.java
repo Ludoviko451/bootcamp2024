@@ -2,6 +2,9 @@ package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
+import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.client.IUserFeignClient;
+import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.token.IToken;
+import com.bootcamp2024.bootcamp2024.configuration.security.jwt.JwtAuthentitacionFilter;
 import com.bootcamp2024.bootcamp2024.domain.api.usecase.TechnologyUseCase;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
@@ -23,13 +26,14 @@ import static org.mockito.Mockito.*;
 
     @Mock
     private ITechnologyPersistencePort technologyPersistencePort;
-
+    @Mock
+     private IToken token;
     private TechnologyUseCase technologyUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        technologyUseCase = new TechnologyUseCase(technologyPersistencePort);
+        technologyUseCase = new TechnologyUseCase(technologyPersistencePort, token);
     }
 
     @Test

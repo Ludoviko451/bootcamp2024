@@ -19,7 +19,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class VersionUseCaseTest {
+class VersionUseCaseTest {
 
     @Mock
     private IVersionPersistencePort versionPersistencePort;
@@ -36,10 +36,10 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testSaveVersion_ValidVersion() {
+    void testSaveVersion_ValidVersion() {
         List<Capacity> capacityList = Collections.emptyList();
-        String startDate = "2024-04-05";
-        String endDate = "2024-04-12";
+        String startDate = LocalDate.now().plusDays(1).toString();;
+        String endDate = LocalDate.now().plusDays(6).toString();;
 
         Bootcamp bootcamp = new Bootcamp(1L, "BootcampName", "BootcampDescription", capacityList);
         Version version = new Version(1L, 30, startDate, endDate, bootcamp);
@@ -55,27 +55,30 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testExistBootcamp_BootcampNotFound() {
+    void testExistBootcamp_BootcampNotFound() {
         when(bootcampPersistencePort.findBootcampByName(anyString())).thenReturn(Optional.empty());
 
         assertThrows(BootcampNotFoundException.class, () -> versionUseCase.existBootcamp( 1L));
     }
 
     @Test
-    public void testExistBootcamp_BootcampFound() {
+    void testExistBootcamp_BootcampFound() {
         Bootcamp bootcamp = new Bootcamp(1L, "BootcampName", "BootcampDescription", Collections.emptyList());
         when(bootcampPersistencePort.findBootcampById(bootcamp.getId())).thenReturn(bootcamp);
+
         versionUseCase.existBootcamp( 1L);
+
+        verify(bootcampPersistencePort, times(1)).findBootcampById(bootcamp.getId());
     }
 
     @Test
-    public void testCheckBootcamp_BootcampNotFound() {
+    void testCheckBootcamp_BootcampNotFound() {
         List<Long> bootcampIds = List.of(1L, 2l, 3L);
         assertThrows(BootcampNotFoundException.class, () -> versionUseCase.checkBootcamps(bootcampIds));
     }
 
     @Test
-    public void testCheckBootcamp_BootcampFound() {
+    void testCheckBootcamp_BootcampFound() {
         List<Long> bootcampIds = List.of(1L, 2l, 3L);
         when(bootcampPersistencePort.findBootcampById(1L)).thenReturn(new Bootcamp(1L, "BootcampName", "BootcampDescription", Collections.emptyList()));
         when(bootcampPersistencePort.findBootcampById(2L)).thenReturn(new Bootcamp(2L, "BootcampName", "BootcampDescription", Collections.emptyList()));
@@ -84,7 +87,7 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testGetAllVersion_ValidInput() {
+    void testGetAllVersion_ValidInput() {
         List<Long> bootcampIds = List.of(1L);
         when(bootcampPersistencePort.findBootcampById(1L)).thenReturn(new Bootcamp(1L, "BootcampName", "BootcampDescription", Collections.emptyList()));
         when(versionPersistencePort.getAllVersion(1, 10, "id", "asc", bootcampIds))
@@ -95,21 +98,21 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testGetAllVersion_NegativePageValue() {
+    void testGetAllVersion_NegativePageValue() {
         List<Long> bootcampIds = List.of(1L, 2L, 3L);
         assertThrows(PageAndSizeLessThanZeroException.class,
                 () -> versionUseCase.getAllVersion(-1, 10, "id", "asc", bootcampIds));
     }
 
     @Test
-    public void testGetAllVersion_NegativeSizeValue() {
+    void testGetAllVersion_NegativeSizeValue() {
         List<Long> bootcampIds = List.of(1L, 2L, 3L);
         assertThrows(PageAndSizeLessThanZeroException.class,
                 () -> versionUseCase.getAllVersion(1, -10, "id", "asc", bootcampIds));
     }
 
     @Test
-    public void testSaveVersion_InvalidMaxCapacity() {
+    void testSaveVersion_InvalidMaxCapacity() {
         List<Capacity> capacityList = Collections.emptyList();
         String startDate = "2024-04-05";
         String endDate = "2024-04-12";
@@ -122,7 +125,7 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testSaveVersion_EndDateBeforeStartDate() {
+    void testSaveVersion_EndDateBeforeStartDate() {
         String startDate = "2024-04-05";
         String endDate = "2024-03-12";
 
@@ -135,7 +138,7 @@ public class VersionUseCaseTest {
     }
 
     @Test
-    public void testSaveVersion_StartDateBeforeToday() {
+    void testSaveVersion_StartDateBeforeToday() {
         String startDate = "2024-03-20";
         String endDate = "2024-03-25";
 
@@ -149,9 +152,9 @@ public class VersionUseCaseTest {
 
 
     @Test
-    public void testSaveVersion_BootcampNotFound() {
+    void testSaveVersion_BootcampNotFound() {
 
-        String startDate = "2024-04-05";
+        String startDate = LocalDate.now().plusDays(1).toString();
         String endDate = "2024-05-05";
         List<Capacity> capacityList = Collections.emptyList();
         Bootcamp bootcamp = new Bootcamp(1L, "BootcampName", "BootcampDescription", capacityList);
