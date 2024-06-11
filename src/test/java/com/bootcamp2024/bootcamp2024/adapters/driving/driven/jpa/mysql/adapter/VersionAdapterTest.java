@@ -45,13 +45,10 @@ class VersionAdapterTest {
         BootcampEntity bootcamp = new BootcampEntity(1L, "BootcampName", "BootcampDescription", null);
         VersionEntity versionEntity = new VersionEntity(1L, 30, LocalDate.now(), LocalDate.now().plusDays(7), bootcamp);
 
-        // Configurar el comportamiento esperado para versionEntityMapper
         when(versionEntityMapper.toEntity(any(Version.class))).thenReturn(versionEntity);
 
-        // Llamar al método a probar
         versionAdapter.saveVersion(new Version(1L, 30, startDate, endDate, new Bootcamp(1L, "BootcampName", "BootcampDescription", null)));
 
-        // Verificar que versionRepository.save fue llamado una vez con el versionEntity correcto
         verify(versionRepository, times(1)).save(versionEntity);
     }
 
@@ -64,7 +61,6 @@ class VersionAdapterTest {
 
         List<Version> versionList = versionAdapter.getAllVersion(1, 10, "id", "asc", Arrays.asList(1L, 2L));
 
-        // Verificar que versionRepository.findAllByBootcampIds fue llamado una vez con los IDs de bootcamp correctos
         verify(versionRepository, times(1)).findAllByBootcampIds(Arrays.asList(1L, 2L), PageRequest.of(1, 10, Sort.by(Sort.Direction.ASC, "id")));
 
     }
@@ -78,7 +74,6 @@ class VersionAdapterTest {
 
         List<Version> versionList = versionAdapter.getAllVersion(1, 10, "id", "asc", null);
 
-        // Verificar que versionRepository.findAll fue llamado una vez con la paginación correcta
         verify(versionRepository, times(1)).findAll(PageRequest.of(1, 10, Sort.by(Sort.Direction.ASC, "id")));
 
     }

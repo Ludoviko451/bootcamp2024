@@ -42,7 +42,7 @@ class BootcampAdapterTest {
 
     @Test
     void testGetAllBootcamp_ValidField() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "desc";
@@ -53,29 +53,29 @@ class BootcampAdapterTest {
         List<BootcampEntity> bootcampEntityList = new ArrayList<>();
         when(bootcampRepository.findAllOrderByCapacitiesCountDesc(pagination)).thenReturn(new PageImpl<>(bootcampEntityList));
 
-        // Execute
+
         List<Bootcamp> bootcamps = bootcampAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
-        // Verify
+
         assertEquals(0, bootcamps.size());
     }
 
     @Test
     void testGetAllBootcamp_InvalidField() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "asc";
         boolean capacities = true;
         String field = "invalidField";
 
-        // Verify
+
         assertThrows(NotValidFieldForVersionException.class, () -> bootcampAdapter.getAllBootcamp(page, size, sortBy, capacities, field));
     }
 
     @Test
     void testGetAllBootcamp_SortByCapacitiesAsc() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "asc";
@@ -86,16 +86,15 @@ class BootcampAdapterTest {
         List<BootcampEntity> bootcampEntityList = new ArrayList<>();
         when(bootcampRepository.findAllOrderByCapacitiesCountAsc(pagination)).thenReturn(new PageImpl<>(bootcampEntityList));
 
-        // Execute
+
         List<Bootcamp> bootcamps = bootcampAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
-        // Verify
         assertEquals(0, bootcamps.size());
     }
 
     @Test
     void testGetAllBootcamp_SortByCapacitiesDesc() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "desc";
@@ -106,17 +105,17 @@ class BootcampAdapterTest {
         List<BootcampEntity> bootcampEntityList = new ArrayList<>();
         when(bootcampRepository.findAllOrderByCapacitiesCountDesc(pagination)).thenReturn(new PageImpl<>(bootcampEntityList));
 
-        // Execute
+
         List<Bootcamp> bootcamps = bootcampAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
-        // Verify
+
 
         assertEquals(0, bootcamps.size());
     }
 
     @Test
     void testGetAllBootcamp_NotSortByCapacities() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "asc";
@@ -127,32 +126,30 @@ class BootcampAdapterTest {
         List<BootcampEntity> bootcampEntityList = new ArrayList<>();
         when(bootcampRepository.findAll(pagination)).thenReturn(new PageImpl<>(bootcampEntityList));
 
-        // Execute
+
         List<Bootcamp> bootcamps = bootcampAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
-        // Verify
+
         assertEquals(0, bootcamps.size());
     }
 
     @Test
     void testSaveBootcamp() {
-        // Configuración
+
         Bootcamp bootcamp = new Bootcamp(1L, "Bootcamp", "Description", Collections.emptyList());
         BootcampEntity bootcampEntity = bootcampEntityMapper.toEntity(bootcamp);
 
-        // Guardar la entidad en el repositorio
 
-        // Ejecución
         bootcampAdapter.saveBootcamp(bootcamp);
 
-        // Verificación
+
         verify(bootcampRepository).save(bootcampEntity);
     }
 
 
     @Test
     void testFindBootcampByName_Exists() {
-        // Setup
+
         Long id = 1L;
         String bootcampName = "Test Bootcamp";
         String description = "Description";
@@ -161,30 +158,29 @@ class BootcampAdapterTest {
         Bootcamp expectedBootcamp = new Bootcamp(id, bootcampName, description, Collections.emptyList());
         when(bootcampEntityMapper.toModel(bootcampEntity)).thenReturn(expectedBootcamp);
 
-        // Execute
+
         Optional<Bootcamp> bootcampOptional = bootcampAdapter.findBootcampByName(bootcampName);
 
-        // Verify
+
         assertTrue(bootcampOptional.isPresent());
         assertEquals(expectedBootcamp, bootcampOptional.get());
     }
 
     @Test
     void testFindBootcampByName_NotExists() {
-        // Setup
+
         String bootcampName = "Nonexistent Bootcamp";
         when(bootcampRepository.findByName(bootcampName)).thenReturn(null);
 
-        // Execute
         Optional<Bootcamp> bootcampOptional = bootcampAdapter.findBootcampByName(bootcampName);
 
-        // Verify
+
         assertFalse(bootcampOptional.isPresent());
     }
 
     @Test
     void testFindBootcampById_Exists() {
-        // Setup
+
         Long id = 1L;
         String bootcampName = "Test Bootcamp";
         String description = "Description";
@@ -194,24 +190,24 @@ class BootcampAdapterTest {
         Bootcamp expectedBootcamp = new Bootcamp(id, bootcampName, description, Collections.emptyList());
         when(bootcampEntityMapper.toModel(bootcampEntity)).thenReturn(expectedBootcamp);
 
-        // Execute
+
         Bootcamp bootcamp = bootcampAdapter.findBootcampById(id);
 
-        // Verify
+
         assertNotNull(bootcamp);
         assertEquals(expectedBootcamp, bootcamp);
     }
 
     @Test
     void testFindBootcampById_NotExists() {
-        // Setup
+
         long bootcampId = 1L;
         when(bootcampRepository.findById(bootcampId)).thenReturn(Optional.empty());
 
-        // Execute
+
         Bootcamp bootcamp = bootcampAdapter.findBootcampById(bootcampId);
 
-        // Verify
+
         assertNull(bootcamp);
     }
 }

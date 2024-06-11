@@ -40,74 +40,74 @@ class TechnologyAdapterTest {
 
     @Test
     void testSaveTechnology() {
-        // Setup
+
         Technology technology = new Technology(1L, "Java", "Description");
         TechnologyEntity technologyEntity = new TechnologyEntity(1L, "Java", "Description");
         when(technologyEntityMapper.toEntity(technology)).thenReturn(technologyEntity);
 
-        // Execute
+
         technologyAdapter.saveTechnology(technology);
 
-        // Verify
+
         verify(technologyRepository).save(technologyEntity);
     }
 
     @Test
     void testDeleteTechnology_ExistingId() {
-        // Setup
+
         Long id = 1L;
         when(technologyRepository.findById(id)).thenReturn(Optional.of(new TechnologyEntity()));
 
-        // Execute
+
         technologyAdapter.deleteTechnology(id);
 
-        // Verify
+
         verify(technologyRepository).deleteById(id);
     }
 
     @Test
     void testDeleteTechnology_NonExistingId() {
-        // Setup
+
         Long id = 1L;
         when(technologyRepository.findById(id)).thenReturn(Optional.empty());
 
-        // Verify
+
         assertThrows(ElementNotFoundException.class, () -> technologyAdapter.deleteTechnology(id));
     }
 
     @Test
     void testFindByName_ExistingTechnology() {
-        // Setup
+
         String technologyName = "Java";
         TechnologyEntity technologyEntity = new TechnologyEntity();
         when(technologyRepository.findByName(technologyName)).thenReturn(technologyEntity);
         Technology expectedTechnology = new Technology(1L, "Java", "Description");
         when(technologyEntityMapper.toModel(technologyEntity)).thenReturn(expectedTechnology);
 
-        // Execute
+
         Optional<Technology> technologyOptional = technologyAdapter.findByName(technologyName);
 
-        // Verify
+
         assertTrue(technologyOptional.isPresent());
         assertEquals(expectedTechnology, technologyOptional.get());
     }
 
     @Test
     void testFindByName_NonExistingTechnology() {
-        // Setup
+
         String technologyName = "Nonexistent Technology";
         when(technologyRepository.findByName(technologyName)).thenReturn(null);
 
-        // Execute
+
         Optional<Technology> technologyOptional = technologyAdapter.findByName(technologyName);
 
-        // Verify
+
         assertFalse(technologyOptional.isPresent());
     }
 
     @Test
     void testGetAllTechnology_ValidField() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "asc";
@@ -117,28 +117,28 @@ class TechnologyAdapterTest {
         when(technologyRepository.findAll(pageable)).thenReturn(new PageImpl<>(technologyEntities));
         when(technologyEntityMapper.toModelList(technologyEntities)).thenReturn(Collections.emptyList());
 
-        // Execute
+
         List<Technology> result = technologyAdapter.getAllTechnology(page, size, sortBy, field);
 
-        // Verify
+
         assertEquals(Collections.emptyList(), result);
     }
 
     @Test
     void testGetAllTechnology_InvalidField() {
-        // Setup
+
         Integer page = 1;
         Integer size = 10;
         String sortBy = "asc";
         String field = "invalidField";
 
-        // Verify
+
         assertThrows(NotValidFieldForVersionException.class, () -> technologyAdapter.getAllTechnology(page, size, sortBy, field));
     }
 
     @Test
     void testUpdateTechnology_ExistingId() {
-        // Setup
+
         Technology technology = new Technology(1L, "Java", "Description");
         TechnologyEntity technologyEntity = new TechnologyEntity(1L, "Java", "Description");
         when(technologyEntityMapper.toEntity(technology)).thenReturn(technologyEntity);
@@ -148,21 +148,21 @@ class TechnologyAdapterTest {
         TechnologyEntity updatedTechnologyEntity = new TechnologyEntity(1L, "Python", "Description");
         when(technologyEntityMapper.toEntity(updatedTechnology)).thenReturn(updatedTechnologyEntity);
 
-        // Execute
+
         technologyAdapter.updateTechnology(updatedTechnology);
 
-        // Verify
+
         verify(technologyRepository).save(updatedTechnologyEntity);
     }
 
 
     @Test
     void testUpdateTechnology_NonExistingId() {
-        // Setup
+
         Technology technology = new Technology(1L, "Java", "Description");
         when(technologyRepository.findById(technology.getId())).thenReturn(Optional.empty());
 
-        // Verify
+
         assertThrows(ElementNotFoundException.class, () -> technologyAdapter.updateTechnology(technology));
     }
 }
