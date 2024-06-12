@@ -1,6 +1,5 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response;
 
-// Solo muestra descripcion
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

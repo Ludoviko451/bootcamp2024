@@ -12,7 +12,7 @@ import java.util.List;
 public interface ITechnologyResponseMapper {
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "name", target = "name") // Ajustar este mapeo según la estructura de tu DTO de respuesta
+    @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
     TechnologyResponse toTechnologyResponse(Technology technology);
 

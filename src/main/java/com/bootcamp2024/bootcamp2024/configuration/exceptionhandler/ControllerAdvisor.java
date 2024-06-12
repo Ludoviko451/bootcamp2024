@@ -37,8 +37,6 @@ public class ControllerAdvisor {
 
 
 
-
-
     @ExceptionHandler(NoDataFoundException.class)
     public ResponseEntity<ExceptionResponse> handleNoDataFoundException() {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
@@ -56,5 +54,12 @@ public class ControllerAdvisor {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 String.format("Parameter not valid: %s", exception.getMessage()),
                 HttpStatus.NOT_FOUND.toString(), LocalDateTime.now()));
+    }
+
+    @ExceptionHandler(InvalidJwtClaimFormat.class)
+    public ResponseEntity<ExceptionResponse> handleInvalidJwtClaimFormat(InvalidJwtClaimFormat exception) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ExceptionResponse(
+                String.format("Invalid JWT claim format: %s", exception.getMessage()),
+                HttpStatus.UNAUTHORIZED.toString(), LocalDateTime.now()));
     }
 }

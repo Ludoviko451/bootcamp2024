@@ -16,11 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 
-// Adaptador que implementa el puerto de persistencia de tecnologías.
-// Utiliza Spring Data JPA para interactuar con la base de datos MySQL.
-
-//La anotación Spring Component se utiliza para indicar una clase como componente. Significa que Spring detectará automáticamente
-//estas clases para la inyección de dependencia cuando se utilice la configuración basada en anotaciones y el escaneo de classpath.
 @Component
 public class TechnologyAdapter implements ITechnologyPersistencePort {
 

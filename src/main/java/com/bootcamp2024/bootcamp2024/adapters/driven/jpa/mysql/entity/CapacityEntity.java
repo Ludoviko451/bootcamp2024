@@ -1,5 +1,7 @@
 package com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,9 +23,13 @@ public class CapacityEntity {
     private Long id;
 
     @Column(unique = true, nullable = false)
+    @NotBlank(message = "Nombre es obligatorio")
+    @Size(max = 50, message = "Nombre no puede superar los 30 caracteres")
     private String name;
 
     @Column(nullable = false)
+    @NotBlank(message = "Descripción es obligatoria")
+    @Size(max = 90, message = "Descripción no puede superar los 90 caracteres")
     private String description;
 
     @ManyToMany
@@ -34,8 +40,4 @@ public class CapacityEntity {
     )
     private List<TechnologyEntity> technologyList;
 
-    // Constructor, getters y setters
-    // Recuerda que necesitarás tener los constructores, getters y setters aquí
-    // Opcionalmente, también podrías considerar métodos adicionales según tus necesidades específicas
-    // Por ejemplo, un método para agregar tecnología a la lista, etc.
 }

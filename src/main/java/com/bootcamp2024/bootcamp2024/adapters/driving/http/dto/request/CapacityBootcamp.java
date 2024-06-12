@@ -13,7 +13,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CapacityBootcamp {
 
-    @NotBlank(message = RequestConstants.ID_IS_MANDATORY)
     private Long id;
     @NotBlank(message = RequestConstants.NAME_IS_MANDATORY)
     private String name;

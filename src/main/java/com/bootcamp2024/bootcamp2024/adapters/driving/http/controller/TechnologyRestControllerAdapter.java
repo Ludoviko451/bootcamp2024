@@ -10,6 +10,8 @@ import com.bootcamp2024.bootcamp2024.adapters.driving.http.utils.ParametersConst
 import com.bootcamp2024.bootcamp2024.domain.api.ITechnologyServicePort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
@@ -50,9 +52,15 @@ public class TechnologyRestControllerAdapter {
 
     @Operation(summary = "Get All Technologies")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Technologies found"),
-            @ApiResponse(responseCode = "404", description = "Technologies not found"),
-            @ApiResponse(responseCode = "400", description = "Parameter not valid")
+            @ApiResponse(responseCode = "200", description = "Technologies found",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "[{\"id\": 1, \"name\": \"Java\"}, {\"id\": 2, \"name\": \"Python\"}]"))),
+            @ApiResponse(responseCode = "404", description = "Technologies not found",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{\"message\": \"No data was found in the database\", \"status\": \"404 NOT_FOUND\", \"timestamp\": \"2024-06-08T18:37:46.1250223\"}"))),
+            @ApiResponse(responseCode = "400", description = "Parameter not valid",
+                    content = @Content(mediaType = "application/json",
+                            examples = @ExampleObject(value = "{\"message\": \"Parameter not valid: ejemplo\", \"status\": \"400 BAD_REQUEST\", \"timestamp\": \"2024-06-08T19:47:32.5389542\"}")))
     })
     @GetMapping("/")
     public ResponseEntity<List<TechnologyResponse>> getAllTechnology(
@@ -62,17 +70,4 @@ public class TechnologyRestControllerAdapter {
             @Parameter(description = "Field to sort by (default: id)", required = false, example = "id") @RequestParam(defaultValue = ParametersConstants.DEFAULT_FIELD) String field) {
         return ResponseEntity.ok(technologyResponseMapper.toTechnologyResponseList(technologyServicePort.getAllTechnology(page, size, sortBy, field)));
     }
-
-
-//    @PutMapping("/")
-//    public ResponseEntity<TechnologyResponse> updateTechnology(@RequestBody UpdateTechnologyRequest request) {
-//        return ResponseEntity.ok(technologyResponseMapper.toTechnologyResponse(
-//                technologyServicePort.updateTechnology(technologyRequestMapper.updateRequestToTechnology(request))
-//        ));
-//    }
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteTechnology(@PathVariable Long id) {
-//        technologyServicePort.deleteTechnology(id);
-//        return ResponseEntity.noContent().build();
-//    }
 }

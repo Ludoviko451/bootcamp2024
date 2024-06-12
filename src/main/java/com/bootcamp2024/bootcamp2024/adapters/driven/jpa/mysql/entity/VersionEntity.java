@@ -26,7 +26,6 @@ public class VersionEntity {
     private LocalDate startDate;
 
     @Column(unique = false, nullable = false)
-
     private LocalDate endDate;
 
     @ManyToOne

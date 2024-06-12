@@ -1,8 +1,7 @@
 package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response;
 
 
-// Esta clase define un DTO (Data Transfer Object) llamado TecnologiaResponse, el cual representa la respuesta
-// de una solicitud HTTP que obtiene información sobre una tecnología.
+
 public class TechnologyResponse {
 
     private final Long id;

@@ -1,4 +1,4 @@
-package com.bootcamp2024.bootcamp2024.adapters.driving.driven.jpa.mysql;
+package com.bootcamp2024.bootcamp2024.adapters.driving.driven.jpa.mysql.adapter;
 
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.adapter.CapacityAdapter;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.entity.CapacityEntity;

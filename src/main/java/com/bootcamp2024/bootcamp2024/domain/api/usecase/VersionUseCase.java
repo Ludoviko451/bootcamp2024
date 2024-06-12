@@ -29,9 +29,7 @@ public class VersionUseCase implements IVersionServicePort {
 
         Bootcamp bootcamp = version.getBootcamp();
 
-
         LocalDate today = LocalDate.now();
-
 
         String startDateStr = version.getStartDate();
         String endDateStr = version.getEndDate();
@@ -40,16 +38,16 @@ public class VersionUseCase implements IVersionServicePort {
         LocalDate endDate;
 
         try {
-            // Parsear las cadenas de fecha a objetos LocalDate
             startDate = LocalDate.parse(startDateStr);
             endDate = LocalDate.parse(endDateStr);
         } catch (DateTimeParseException e) {
             throw new VersionDateParseException();
         }
 
-        if (version.getMaximumCapacity() < 0 || version.getMaximumCapacity() > 50){
+        if (version.getMaximumCapacity() < 0 || version.getMaximumCapacity() > 500){
             throw new VersionMaximumCapacityPassTheLimitException(version.getMaximumCapacity());
         }
+
         if(endDate.isBefore(startDate)){
             throw new VersionEndDateIsBeforeStartDateException();
         }
@@ -80,7 +78,6 @@ public class VersionUseCase implements IVersionServicePort {
     public void checkBootcamps(List<Long> bootcampIds) {
         if (bootcampIds != null){
         for (Long id : bootcampIds) {
-            // Utiliza el método findBootcampById para verificar cada bootcamp por su ID
             Bootcamp bootcamp = bootcampPersistencePort.findBootcampById(id);
             if (bootcamp == null) {
                 throw new BootcampNotFoundException(id);

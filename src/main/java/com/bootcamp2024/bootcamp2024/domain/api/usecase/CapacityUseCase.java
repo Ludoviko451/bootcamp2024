@@ -40,18 +40,17 @@ public class CapacityUseCase implements ICapacityServicePort {
 
     @Override
     public void saveCapacity(Capacity capacity) {
-        //Verificar si hay una capacidad con el mismo nombre
+
 
         Optional<Capacity> existingCapacity = capacityPersistencePort.findCapacityByName(capacity.getName());
         if (existingCapacity.isPresent()){
             throw new CapacityAlreadyExistsException();
         }
-        // Verificar si hay tecnologias duplicadas
+
         if (ListHelper.hasDuplicatesTechnology(capacity.getTechnologyList())) {
             throw new DuplicateTechnologyException();
         }
 
-        // Verificar si el tamaño de la lista está dentro de los límites permitidos
         if (capacity.getTechnologyList().size() < 3 || capacity.getTechnologyList().size() > 20) {
             throw new TechnologySizeIsNotInTheLimitException();
         }

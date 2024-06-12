@@ -44,13 +44,10 @@ class VersionUseCaseTest {
         Bootcamp bootcamp = new Bootcamp(1L, "BootcampName", "BootcampDescription", capacityList);
         Version version = new Version(1L, 30, startDate, endDate, bootcamp);
 
-        // Configurar el comportamiento esperado para bootcampPersistencePort
         when(bootcampPersistencePort.findBootcampById(bootcamp.getId())).thenReturn(bootcamp);
 
-        // Llamar al método a probar
         versionUseCase.saveVersion(version);
 
-        // Verificar que versionPersistencePort.saveVersion fue llamado una vez
         verify(versionPersistencePort, times(1)).saveVersion(version);
     }
 
@@ -155,7 +152,7 @@ class VersionUseCaseTest {
     void testSaveVersion_BootcampNotFound() {
 
         String startDate = LocalDate.now().plusDays(1).toString();
-        String endDate = "2024-05-05";
+        String endDate =   LocalDate.now().plusDays(10).toString();
         List<Capacity> capacityList = Collections.emptyList();
         Bootcamp bootcamp = new Bootcamp(1L, "BootcampName", "BootcampDescription", capacityList);
         Version version = new Version(1L, 30, startDate, endDate, bootcamp);

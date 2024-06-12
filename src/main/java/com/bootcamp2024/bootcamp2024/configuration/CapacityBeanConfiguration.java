@@ -25,6 +25,6 @@ public class CapacityBeanConfiguration {
     }
 
     @Bean
-    public ICapacityServicePort capacityServicePort(){ return new CapacityUseCase(capacityPersistencePort(), technologyBeanConfiguration.tecnologiaServicePort());
+    public ICapacityServicePort capacityServicePort(){ return new CapacityUseCase(capacityPersistencePort(), technologyBeanConfiguration.technologyServicePort());
     }
 }

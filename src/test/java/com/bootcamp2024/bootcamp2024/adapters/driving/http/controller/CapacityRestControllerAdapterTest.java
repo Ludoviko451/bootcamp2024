@@ -81,11 +81,11 @@ class CapacityRestControllerAdapterTest {
         when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("Capacity 1", capacityResponses.get(0).getName());
@@ -96,7 +96,7 @@ class CapacityRestControllerAdapterTest {
 
     @Test
     void shouldReturnCapacitiesInAscendingOrder() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "asc";
@@ -116,11 +116,11 @@ class CapacityRestControllerAdapterTest {
         when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("BCapacity 2", capacityResponses.get(1).getName());
@@ -131,7 +131,7 @@ class CapacityRestControllerAdapterTest {
 
     @Test
     void shouldReturnCapacitiesInDescendingOrder() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "desc";
@@ -151,11 +151,11 @@ class CapacityRestControllerAdapterTest {
         when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZCapacity 2", capacityResponses.get(0).getName());
@@ -192,11 +192,11 @@ class CapacityRestControllerAdapterTest {
         when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("Capacity 2", capacityResponses.get(0).getName());
@@ -234,11 +234,10 @@ class CapacityRestControllerAdapterTest {
         when(capacityServicePort.getAllCapacity(page, size, sortBy, technologies, field)).thenReturn(capacityList);
         when(capacityResponseMapper.toCapacityResponseList(capacityList)).thenReturn(expectedResponses);
 
-        // Act
         ResponseEntity<List<CapacityResponse>> responseEntity = capacityRestControllerAdapter.getAllCapacity(page, size, sortBy, technologies, field);
 
         List<CapacityResponse> capacityResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("Capacity 2", capacityResponses.get(1).getName());

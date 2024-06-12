@@ -67,7 +67,7 @@ class BootcampRestControllerAdapterTest {
     }
         @Test
         void shouldReturnAllBootcamp() {
-            // Arrange
+
             Integer page = 0;
             Integer size = 10;
             String sortBy = "";
@@ -87,11 +87,10 @@ class BootcampRestControllerAdapterTest {
             when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
             when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
-            // Act
             ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
             List<BootcampResponse> bootcampResponses = responseEntity.getBody();
-            // Assert
+
             assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
             assertEquals(expectedResponses, responseEntity.getBody());
             assertEquals("Bootcamp 1", bootcampResponses.get(0).getName());
@@ -102,7 +101,7 @@ class BootcampRestControllerAdapterTest {
 
     @Test
     void shouldReturnBootcampInAscendingOrder() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "asc";
@@ -122,11 +121,11 @@ class BootcampRestControllerAdapterTest {
         when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ABootcamp 1", bootcampResponses.get(0).getName());
@@ -137,7 +136,7 @@ class BootcampRestControllerAdapterTest {
 
     @Test
     void shouldReturnBootcampInDescendingOrder() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "desc";
@@ -157,11 +156,9 @@ class BootcampRestControllerAdapterTest {
         when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
-        // Act
         ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
-        // Assert
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(0).getName());
@@ -172,7 +169,7 @@ class BootcampRestControllerAdapterTest {
 
     @Test
     void shouldReturnBootcampAscendingOrderByCapacities() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "asc";
@@ -201,11 +198,11 @@ class BootcampRestControllerAdapterTest {
         when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(0).getName());
@@ -216,7 +213,7 @@ class BootcampRestControllerAdapterTest {
 
     @Test
     void shouldReturnBootcampDescendingOrderByCapacities() {
-        // Arrange
+
         Integer page = 0;
         Integer size = 10;
         String sortBy = "asc";
@@ -246,11 +243,11 @@ class BootcampRestControllerAdapterTest {
         when(bootcampServicePort.getAllBootcamp(page, size, sortBy, capacities, field)).thenReturn(bootcampList);
         when(bootcampResponseMapper.toBootcampResponseList(bootcampList)).thenReturn(expectedResponses);
 
-        // Act
+
         ResponseEntity<List<BootcampResponse>> responseEntity = bootcampRestControllerAdapter.getAllBootcamp(page, size, sortBy, capacities, field);
 
         List<BootcampResponse> bootcampResponses = responseEntity.getBody();
-        // Assert
+
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(expectedResponses, responseEntity.getBody());
         assertEquals("ZBootcamp 2", bootcampResponses.get(1).getName());

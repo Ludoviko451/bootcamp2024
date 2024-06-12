@@ -37,8 +37,8 @@ public class CapacityRestControllerAdapter {
 
     @Operation(summary = "Add a Capacity")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Bootcamp created"),
-            @ApiResponse(responseCode = "400", description = "Bootcamps exceed or fall below the limit"),
+            @ApiResponse(responseCode = "201", description = "Capacity created"),
+            @ApiResponse(responseCode = "400", description = "Capacities exceed or fall below the limit"),
             @ApiResponse(responseCode = "400", description = "Duplicate technology"),
     })
     @PostMapping("/")

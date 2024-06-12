@@ -1,4 +1,4 @@
-package com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.mappers;
+package com.bootcamp2024.bootcamp2024.adapters.driving.http.mappers;
 
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.request.AddCapacityRequest;
 import com.bootcamp2024.bootcamp2024.adapters.driving.http.dto.response.CapacityResponse;

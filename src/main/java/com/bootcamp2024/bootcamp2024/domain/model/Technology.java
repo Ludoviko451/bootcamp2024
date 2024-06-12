@@ -7,7 +7,7 @@ public class Technology {
     private final String description;
 
 
-    // Constructor con parámetros
+
     public Technology(Long id, String name, String description) {
         this.id = id;
         this.name = name;
@@ -15,8 +15,6 @@ public class Technology {
     }
 
 
-
-    // Métodos de acceso
     public Long getId() {
         return id;
     }

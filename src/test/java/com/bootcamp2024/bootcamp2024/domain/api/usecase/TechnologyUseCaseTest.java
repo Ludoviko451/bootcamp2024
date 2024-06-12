@@ -2,10 +2,6 @@ package com.bootcamp2024.bootcamp2024.domain.api.usecase;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.NoDataFoundException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp2024.bootcamp2024.adapters.driven.jpa.mysql.exception.TechnologyNotFoundException;
-import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.client.IUserFeignClient;
-import com.bootcamp2024.bootcamp2024.adapters.driven.microservices.token.IToken;
-import com.bootcamp2024.bootcamp2024.configuration.security.jwt.JwtAuthentitacionFilter;
-import com.bootcamp2024.bootcamp2024.domain.api.usecase.TechnologyUseCase;
 import com.bootcamp2024.bootcamp2024.domain.model.Technology;
 import com.bootcamp2024.bootcamp2024.domain.spi.ITechnologyPersistencePort;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,40 +22,37 @@ import static org.mockito.Mockito.*;
 
     @Mock
     private ITechnologyPersistencePort technologyPersistencePort;
-    @Mock
-     private IToken token;
+
     private TechnologyUseCase technologyUseCase;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        technologyUseCase = new TechnologyUseCase(technologyPersistencePort, token);
+        technologyUseCase = new TechnologyUseCase(technologyPersistencePort);
     }
 
     @Test
     void shouldSaveTecnologiaSuccessfully() {
-        // Configuración del mock para que no encuentre ninguna tecnología con el mismo nombre
+
         when(technologyPersistencePort.findByName(anyString())).thenReturn(Optional.empty());
 
-        // Crear una tecnología
+
         Technology technology = new Technology(1L, "Java", "Descripción de Java");
 
-        // Llamar al método saveTecnologia
         technologyUseCase.saveTechnology(technology);
 
-        // Verificar que el método saveTecnologia del puerto de persistencia fue invocado una vez
         verify(technologyPersistencePort, times(1)).saveTechnology(technology);
     }
 
      @Test
      void shouldThrowExceptionWhenTecnologiaExists() {
-         // Configurar el comportamiento del mock para que devuelva un Optional con la tecnología
+
          Technology technology = new Technology(1L, "Java", "Lenguaje de programacion");
 
-         // Configurar qué debe devolver el mock al llamar a tecnologiaPersistencePort.findByName()
+
          when(technologyPersistencePort.findByName(technology.getName())).thenReturn(Optional.of(technology));
 
-         // Verificar que se lance una excepción cuando se intente guardar una tecnología que ya existe
+
          assertThrows(TechnologyAlreadyExistsException.class, () -> {
              technologyUseCase.saveTechnology(technology);
          });
@@ -73,12 +66,11 @@ import static org.mockito.Mockito.*;
 
          List<Technology> technologyList = Arrays.asList(technology1, technology2);
 
-         // Configuración del mock para devolver la lista de tecnologías
+
          when(technologyPersistencePort.getAllTechnology(anyInt(), anyInt(), anyString(), anyString())).thenReturn(technologyList);
 
          List<Technology> resultado = technologyUseCase.getAllTechnology(0, 2, "", "id");
 
-         // Comparar solo los nombres de las tecnologías
          assertEquals(2, resultado.size());
          assertEquals("Java", resultado.get(0).getName());
          assertEquals("Python", resultado.get(1).getName());

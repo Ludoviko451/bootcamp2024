@@ -9,7 +9,6 @@ public class RequestConstants {
     public static final int NAME_MAX_SIZE = 50;
     public static final int DESCRIPTION_MAX_SIZE = 90;
 
-    public static final String ID_IS_MANDATORY = "LA ID ES OBLIGATORIA";
     public static final String NAME_IS_MANDATORY = "EL NOMBRE ES OBLIGATORIO";
     public static final String DESCRIPTION_IS_MANDATORY = "LA DESCRIPCION ES OBLIGATORIO";
     public static final String TECHNOLOGIES_LIST_IS_MANDATORY = "LA LISTA DE TECNOLOGIAS NO PUEDE ESTAR VACIA";

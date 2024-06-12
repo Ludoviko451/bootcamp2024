@@ -18,10 +18,10 @@ public class GlobalExceptionHandler {
         body.put("status", HttpStatus.BAD_REQUEST);
         body.put("error", "Validation Error");
 
-        // Personalizar el mensaje de error para incluir detalles específicos de la validación
+
         StringBuilder errorMessage = new StringBuilder("Validation failed for: ");
         ex.getBindingResult().getFieldErrors().forEach(error -> errorMessage.append(error.getField()).append(" (").append(error.getDefaultMessage()).append("), "));
-        // Eliminar la coma y el espacio al final
+
         errorMessage.setLength(errorMessage.length() - 2);
         body.put("message", errorMessage.toString());
 

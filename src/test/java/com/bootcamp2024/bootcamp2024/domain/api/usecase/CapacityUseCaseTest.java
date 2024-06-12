@@ -74,7 +74,6 @@ class CapacityUseCaseTest {
 
     @Test
     void shouldSaveCapacitySuccessfully() {
-        // Crear una capacidad con una lista de tecnologías
         List<Technology> technologyList = Arrays.asList(
                 new Technology(1L, "Java", "Lenguaje de programacion"),
                 new Technology(2L, "Python", "Lenguaje de programacion"),
@@ -82,10 +81,8 @@ class CapacityUseCaseTest {
         );
         Capacity capacity = new Capacity(1L, "Capacidad de prueba", "Descripcion", technologyList);
 
-        // Llamar al método que queremos probar
         assertDoesNotThrow(() -> capacityUseCase.saveCapacity(capacity));
 
-        // Verificar que el método saveCapacity fue llamado una vez con la capacidad esperada
         verify(capacityPersistencePort, times(1)).saveCapacity(capacity);
     }
 
